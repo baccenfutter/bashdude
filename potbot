@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# shellbot.sh - IRC Bot
+# Author: baccenfutter, c-base.org
+# Original Code from: Sean B. Palmer, inamidst.com
+
+NICK=p0tb0t
+SERVER=${1:-irc.freenode.net}
+CHANNEL=${2:-##baccenfutter}
+
+echo "NICK $NICK" > potbot.input
+echo "USER $(whoami) +iw $NICK :$0" >> potbot.input
+echo "JOIN $CHANNEL" >> potbot.input
+
+tail -f potbot.input | telnet $SERVER 6667 | \
+while true
+	do read LINE || break
+
+	echo $LINE
+	if echo $LINE | egrep "$NICK: ping$"; then
+		echo "PRIVMSG $CHANNEL :pong" >> potbot.input
+	fi
+done
+
+# [EOF]
+
