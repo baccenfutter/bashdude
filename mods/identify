@@ -3,10 +3,8 @@
 username="$1"
 password="$2"
 
-declare -a friends
-declare -a users
-
 case $chan in
+	# first of all, check if we are authenticating in public
 	\#*)
 	echo "warning: $source_nick tried identifying in a channel!"
 	answer "don't identify in a channel, dumb-ass!"
@@ -18,21 +16,18 @@ case $chan in
 	fi
 	;;
 	
+	# authenticate
 	*)
-	# check if we allready have authenticated
-	#if [[ -n ${friends[$hostmask]} ]]; then
-	#	answer "i allready know you, ${friends[$hostmask]}"
-	#	return
-	#fi
-
-	# walk through user file
-	for userline in $(cat etc/users)
-	do
-		# validate authentication
-		if [[ "$(echo $userline | cut -d: -f1)" == "$username" ]] && [[ "$(echo $userline | cut -d: -f2)" == "$password" ]]; then
-			friends[${#friends[*]}]="$hostmask"
-			users[${#users[*]}]="$username"
+	if [[ -z "$(cat $nick.acl | grep $username)" ]]; then
+		acl_auth $username $password
+		if [[ -n "$(cat $nick.acl | grep $hostmask)" ]]; then
+			answer "Authentication successfull!"
+		else
+			answer "Authentication failed!"
 		fi
-	done
+	else
+		echo "Warning: $username ist trying to authenticate from $hostmask while logged in from $(cat $nick.acl | grep $username | cut -d: -f1)."
+		answer "Authentication failed! You are allready logged in."
+	fi
 esac
 

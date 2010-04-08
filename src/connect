@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm $nick.acl &> /dev/null
+touch $nick.acl
+
 echo "nick $nick" > $nick.input
 echo "user $nick +iw $nick :$0" >> $nick.input
 (sleep 3; echo "join " $channel >> $nick.input) &

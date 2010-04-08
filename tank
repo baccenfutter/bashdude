@@ -38,6 +38,19 @@ function answer
 	echo "$line" >> $nick.input
 }
 
+function acl_auth
+{
+	username=$1
+	password=$2
+
+	acl=$(cat etc/users | grep "$username:$password" | cut -d: -f3)
+	
+	if [[ -n $acl ]]; then
+		echo "$hostmask:$username:$acl" >> $nick.acl
+		return
+	fi
+}
+
 function acl_check
 {
 	case $1 in
@@ -52,10 +65,10 @@ function acl_check
 		;;
 	esac
 
-	if [[ "$(cat etc/users | grep ${friends[$hostmask]} | cut -d: -f3)" == $acl ]]; then
-		return true
+	if [[ "$(cat $nick.acl | grep $hostname | cut -d: -f3)" == $acl ]]; then
+		return 1
 	else
-		return false
+		return 0
 	fi
 }
 
