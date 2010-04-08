@@ -1,0 +1,4 @@
+#!/bin/bash
+
+OWNER=$(cat etc/users | grep :owner | cut -d: -f1)
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "PONG ${LINE:5}" >> $NICK.input
+echo "PONG ${LINE:5}"
+

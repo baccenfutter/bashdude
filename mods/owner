@@ -1,0 +1,3 @@
+#!/bin/bash
+
+answer "My owner is [ $OWNER ]"

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+CLIST=$(ls mods/)
+CLIST=${CLIST/commands/}
+
+answer "Commands: $CLIST"
+

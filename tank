@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# shellbot.sh - IRC Bot
+# Author: baccenfutter, c-base.org
+# Original Code from: Sean B. Palmer, inamidst.com
+
+NICK=tank
+SERVER=${1:-localhost}
+CHANNEL=${2:-##baccenfutter}
+PREFIXCHAR="$"
+
+
+# load config
+. etc/*.conf
+
+function answer
+{
+	MSG="$@"
+	LINE=""
+	
+	echo $CHAN $MSG
+
+	# first, fetch errors
+	if [[ "$MSG" == "" ]]; then
+		echo "ERROR: Can't send PRIVMSG - Missing parameter!"
+		return 0
+	fi
+	LINE="PRIVMSG"
+	
+	# check for query or channel
+	if [[ "${CHAN:0:1}" == "#" ]]; then
+		LINE="$(echo $LINE $CHAN :)"
+		# check for $CONFIG_REPLY_NICK
+		if [[ $CONFIG_REPLY_NICK == true ]]; then LINE="$(echo $LINE $SOURCE_NICK:)"; fi
+	else
+		LINE=$(echo $LINE $SOURCE_NICK :)
+	fi
+
+	# finally, add $MSG and burst it out
+	LINE="$(echo $LINE$MSG)"
+	echo "$LINE" >> $NICK.input
+}
+
+
+### The Bot's main body ###
+
+. src/connect
+. src/auth
+
+tail -f $NICK.input | telnet $SERVER 6667 | \
+while true
+	do read LINE || break
+
+	echo $(date +%H:%M:%S) $LINE
+	
+	if [[ "${LINE:0:1}" == ":" ]]; then
+		. src/main
+	else
+		if [[ "${LINE:0:4}" == "PING" ]]; then
+			. src/global_ping
+		fi
+	fi
+done
+

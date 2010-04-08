@@ -1,0 +1,9 @@
+#!/bin/bash
+
+CHANNEL=$1
+KEY=$2
+
+if [[ "$SOURCE_NICK" == "baccenfutter" ]]; then
+	echo "JOIN $CHANNEL $KEY" >> $NICK.input
+fi
+
