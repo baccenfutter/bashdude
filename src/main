@@ -6,7 +6,6 @@ nickchar="!"
 header="$(echo $line | cut -d ":" -f 2)"
 body="${line:$(expr ${#header} + 1)}"
 hostmask="$(echo $header | cut -d " " -f 1)"
-echo $hostmask
 source_nick=$(echo $hostmask | cut -d "!" -f 1)
 	#echo "header: $header"
 	#echo "body: $body"
@@ -16,10 +15,10 @@ source_nick=$(echo $hostmask | cut -d "!" -f 1)
 if [[ "$hostmask" =~ "${nickchar}" ]]; then
 	# there is a source_nick
 	flag=$(echo $header | cut -d " " -f 2)
-	if [[ "$flag" == "join" ]]; then
+	if [[ "$flag" == "JOIN" ]]; then
 		# yet to come...
 		continue
-	elif [[ "$flag" == "privmsg" ]]; then
+	elif [[ "$flag" == "PRIVMSG" ]]; then
 		# we have a privmsg
 		chan=$(echo $header | cut -d " " -f 3)
 		msg=${body:1}
