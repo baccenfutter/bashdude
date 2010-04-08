@@ -17,8 +17,6 @@ function answer
 	MSG="$@"
 	LINE=""
 	
-	echo $CHAN $MSG
-
 	# first, fetch errors
 	if [[ "$MSG" == "" ]]; then
 		echo "ERROR: Can't send PRIVMSG - Missing parameter!"
