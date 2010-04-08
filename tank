@@ -38,6 +38,28 @@ function answer
 	echo "$LINE" >> $NICK.input
 }
 
+function acl_check
+{
+	case $1 in
+		owner)
+		ACL=$1
+		;;
+		admin)
+		ACL={owner|admin}
+		;;
+		user)
+		ACL={owner|admin|user}
+		;;
+	esac
+
+	if [[ "$(cat etc/users | grep ${FRIENDS[$HOSTMASK]} | cut -d: -f3)" == $ACL ]]; then
+		return true
+	else
+		return false
+	fi
+}
+
+
 
 ### The Bot's main body ###
 
