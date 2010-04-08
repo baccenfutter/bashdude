@@ -1,35 +1,36 @@
 #!/bin/bash
 
-NICKCHAR="!"
+nickchar="!"
 
 # cut the irc line into segments for easier naming in modules and further on
-HEADER="$(echo $LINE | cut -d ":" -f 2)"
-BODY="${LINE:$(expr ${#HEADER} + 1)}"
-HOSTMASK="$(echo $HEADER | cut -d " " -f 1)"
-SOURCE_NICK=$(echo $HOSTMASK | cut -d "!" -f 1)
-	#echo "HEADER: $HEADER"
-	#echo "BODY: $BODY"
-	#echo "HOSTMASK: $HOSTMASK"
-	#echo "SOURCE_NICK: $SOURCE_NICK"
+header="$(echo $line | cut -d ":" -f 2)"
+body="${line:$(expr ${#header} + 1)}"
+hostmask="$(echo $header | cut -d " " -f 1)"
+echo $hostmask
+source_nick=$(echo $hostmask | cut -d "!" -f 1)
+	#echo "header: $header"
+	#echo "body: $body"
+	#echo "hostmask: $hostmask"
+	#echo "source_nick: $source_nick"
 
-if [[ "$HOSTMASK" =~ "${NICKCHAR}" ]]; then
+if [[ "$hostmask" =~ "${nickchar}" ]]; then
 	# there is a source_nick
-	FLAG=$(echo $HEADER | cut -d " " -f 2)
-	if [[ "$FLAG" == "JOIN" ]]; then
+	flag=$(echo $header | cut -d " " -f 2)
+	if [[ "$flag" == "join" ]]; then
 		# yet to come...
 		continue
-	elif [[ "$FLAG" == "PRIVMSG" ]]; then
+	elif [[ "$flag" == "privmsg" ]]; then
 		# we have a privmsg
-		CHAN=$(echo $HEADER | cut -d " " -f 3)
-		MSG=${BODY:1}
+		chan=$(echo $header | cut -d " " -f 3)
+		msg=${body:1}
 
-		if [[ "${MSG:0:1}" == "$PREFIXCHAR" ]]; then
+		if [[ "${msg:0:1}" == "$prefixchar" ]]; then
 			# we have a command
-			MSG=${MSG:1}
-		elif echo $MSG | egrep "^$NICK" &> /dev/null ; then
+			msg=${msg:1}
+		elif echo $msg | egrep "^$nick" &> /dev/null ; then
 			# we have a command, as well
-			MSG=${MSG:$(expr ${#NICK} + 2)}
-		elif [[ "$CHAN" == "$NICK" ]]; then
+			msg=${msg:$(expr ${#nick} + 2)}
+		elif [[ "$chan" == "$nick" ]]; then
 			echo >> /dev/null
 		else
 			# we do not have a command
@@ -37,14 +38,14 @@ if [[ "$HOSTMASK" =~ "${NICKCHAR}" ]]; then
 		fi
 
 		# again, split into segments
-		COMMAND=$(echo $MSG | cut -d " " -f 1)
-		PARAMS=${MSG:$(expr ${#COMMAND} + 1)}
+		command=$(echo $msg | cut -d " " -f 1)
+		params=${msg:$(expr ${#command} + 1)}
 
 		# run command module
-		if [[ -f mods/$COMMAND ]]; then
-			. mods/$COMMAND $PARAMS
+		if [[ -f mods/$command ]]; then
+			. mods/$command $params
 		else
-			answer "Whatever dude..."
+			answer "whatever dude..."
 		fi
 	fi
 fi

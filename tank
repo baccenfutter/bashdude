@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# shellbot.sh - IRC Bot
-# Author: baccenfutter, c-base.org
-# Original Code from: Sean B. Palmer, inamidst.com
+# shellbot.sh - irc bot
+# author: baccenfutter, c-base.org
+# original code from: sean b. palmer, inamidst.com
 
-NICK=tank
-SERVER=${1:-localhost}
-CHANNEL=${2:-##baccenfutter}
-PREFIXCHAR="$"
+nick=tank
+server=${1:-localhost}
+channel=${2:-##baccenfutter}
+prefixchar="$"
 
 
 # load config
@@ -14,45 +14,45 @@ PREFIXCHAR="$"
 
 function answer
 {
-	MSG="$@"
-	LINE=""
+	msg="$@"
+	line=""
 	
 	# first, fetch errors
-	if [[ "$MSG" == "" ]]; then
-		echo "ERROR: Can't send PRIVMSG - Missing parameter!"
+	if [[ "$msg" == "" ]]; then
+		echo "error: can't send privmsg - missing parameter!"
 		return 0
 	fi
-	LINE="PRIVMSG"
+	line="privmsg"
 	
 	# check for query or channel
-	if [[ "${CHAN:0:1}" == "#" ]]; then
-		LINE="$(echo $LINE $CHAN :)"
-		# check for $CONFIG_REPLY_NICK
-		if [[ $CONFIG_REPLY_NICK == true ]]; then LINE="$(echo $LINE $SOURCE_NICK:)"; fi
+	if [[ "${chan:0:1}" == "#" ]]; then
+		line="$(echo $line $chan :)"
+		# check for $config_reply_nick
+		if [[ $config_reply_nick == true ]]; then line="$(echo $line $source_nick:)"; fi
 	else
-		LINE=$(echo $LINE $SOURCE_NICK :)
+		line=$(echo $line $source_nick :)
 	fi
 
-	# finally, add $MSG and burst it out
-	LINE="$(echo $LINE$MSG)"
-	echo "$LINE" >> $NICK.input
+	# finally, add $msg and burst it out
+	line="$(echo $line$msg)"
+	echo "$line" >> $nick.input
 }
 
 function acl_check
 {
 	case $1 in
 		owner)
-		ACL=$1
+		acl=$1
 		;;
 		admin)
-		ACL={owner|admin}
+		acl={owner|admin}
 		;;
 		user)
-		ACL={owner|admin|user}
+		acl={owner|admin|user}
 		;;
 	esac
 
-	if [[ "$(cat etc/users | grep ${FRIENDS[$HOSTMASK]} | cut -d: -f3)" == $ACL ]]; then
+	if [[ "$(cat etc/users | grep ${friends[$hostmask]} | cut -d: -f3)" == $acl ]]; then
 		return true
 	else
 		return false
@@ -61,21 +61,21 @@ function acl_check
 
 
 
-### The Bot's main body ###
+### the bot's main body ###
 
 . src/connect
 . src/auth
 
-tail -f $NICK.input | telnet $SERVER 6667 | \
+tail -f $nick.input | telnet $server 6667 | \
 while true
-	do read LINE || break
+	do read line || break
 
-	echo $(date +%H:%M:%S) $LINE
+	echo $(date +%h:%m:%s) $line
 	
-	if [[ "${LINE:0:1}" == ":" ]]; then
+	if [[ "${line:0:1}" == ":" ]]; then
 		. src/main
 	else
-		if [[ "${LINE:0:4}" == "PING" ]]; then
+		if [[ "${line:0:4}" == "ping" ]]; then
 			. src/global_ping
 		fi
 	fi

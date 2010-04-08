@@ -1,36 +1,36 @@
 #!/bin/bash
 
-USERNAME=$1
-PASSWORD=$2
+username="$1"
+password="$2"
 
-declare -a FRIENDS
+declare -a friends
 
-case $CHAN in
-	\#*)	# Identifying in a channel is not so cool
-	echo "WARNING: $SOURCE_NICK tried identifying in a channel!"
-	answer "Don't identify in a channel, dumb-ass!"
-	if [[ ! "$PASSWORD" == "" ]]; then
-		echo "CRITICAL: $SOURCE_NICK identified in a channel! Account [DISABLED]."
-		answer "Great! Stating your password here was a very smart idea... idot!"
-		answer "I am disabling your account, fool."
-		echo "Yet to come..."
+case $chan in
+	\#*)
+	echo "warning: $source_nick tried identifying in a channel!"
+	answer "don't identify in a channel, dumb-ass!"
+	if [[ ! "$password" == "" ]]; then
+		echo "critical: $source_nick identified in a channel! account [disabled]."
+		answer "great! stating your password here was a very smart idea... idot!"
+		answer "i am disabling your account, fool."
+		echo "yet to come..."
 	fi
 	;;
 	
-	*)		# If we are in a query, let's go
-	# check if we already are authenticated
-	if [[ ! ${FRIENDS[$HOSTMASK]} == "" ]]; then
-		answer "I allready know you, ${FRIENDS[$HOSTMASK]}"
-		return false
-	fi
+	*)
+	# check if we allready have authenticated
+	#if [[ -n ${friends[$hostmask]} ]]; then
+	#	answer "i allready know you, ${friends[$hostmask]}"
+	#	return
+	#fi
 
 	# walk through user file
-	for USERLINE in $(cat etc/users)
+	for userline in $(cat etc/users)
 	do
 		# validate authentication
-		if [[ "$(echo $USERLINE | cut -d: -f1)" == "$USERNAME" ]] && [[ "$(echo $USERLINE | cut -d: -f2)" == "$PASSWORD" ]]; then
-			FRIENDS[$HOSTMASK]="$USERNAME"
-			answer ${FRIENDS[@]}
+		if [[ "$(echo $userline | cut -d: -f1)" == "$username" ]] && [[ "$(echo $userline | cut -d: -f2)" == "$password" ]]; then
+			friends[$hostmask]="$username"
+			answer ${friends}
 		fi
 	done
 esac

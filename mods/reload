@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [[ "$SOURCE_NICK" == "$OWNER" ]]; then
-	echo "Rehashing configuration..."
+if [[ "$source_nick" == "$owner" ]]; then
+	echo "rehashing configuration..."
 	cat mods/*.conf | egrep -v "^#" | egrep -v "^$"
 	. mods/*.conf
-	echo "Done!"
+	echo "done!"
 fi

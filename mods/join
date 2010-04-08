@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL=$1
-KEY=$2
+channel=$1
+key=$2
 
-if [[ "$SOURCE_NICK" == "baccenfutter" ]]; then
-	echo "JOIN $CHANNEL $KEY" >> $NICK.input
+if [[ "$source_nick" == "baccenfutter" ]]; then
+	echo "join $channel $key" >> $nick.input
 fi
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "NICK $NICK" > $NICK.input
-echo "USER $NICK +iw $NICK :$0" >> $NICK.input
-(sleep 3; echo "JOIN " $CHANNEL >> $NICK.input) &
+echo "nick $nick" > $nick.input
+echo "user $nick +iw $nick :$0" >> $nick.input
+(sleep 3; echo "join " $channel >> $nick.input) &
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CHANNEL=${1:-$CHAN}
+channel=${1:-$chan}
 
-if [[ "$SOURCE_NICK" == "baccenfutter" ]]; then
-	echo "PART $CHANNEL" >> $NICK.input
+if [[ "$source_nick" == "baccenfutter" ]]; then
+	echo "part $channel" >> $nick.input
 fi
 
