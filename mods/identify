@@ -1,12 +1,15 @@
 #!/bin/bash
 
+USERNAME=$1
+PASSWORD=$2
+
 declare -a FRIENDS
 
 case $CHAN in
 	\#*)	# Identifying in a channel is not so cool
 	echo "WARNING: $SOURCE_NICK tried identifying in a channel!"
 	answer "Don't identify in a channel, dumb-ass!"
-	if [[ ! "$2" == "" ]]; then
+	if [[ ! "$PASSWORD" == "" ]]; then
 		echo "CRITICAL: $SOURCE_NICK identified in a channel! Account [DISABLED]."
 		answer "Great! Stating your password here was a very smart idea... idot!"
 		answer "I am disabling your account, fool."
@@ -16,20 +19,17 @@ case $CHAN in
 	
 	*)		# If we are in a query, let's go
 	# check if we already are authenticated
-	for FRIEND in ${FRIENDS[*]}
-	do
-		if [[ "$FRIEND" == "$HOSTMASK" ]]; then
-			answer "I allready know you."
-			return
-		fi
-	done
+	if [[ ! ${FRIENDS[$HOSTMASK]} == "" ]]; then
+		answer "I allready know you, ${FRIENDS[$HOSTMASK]}"
+		return false
+	fi
 
 	# walk through user file
 	for USERLINE in $(cat etc/users)
 	do
 		# validate authentication
-		if [[ "$(echo $USERLINE | cut -d: -f1)" == "$1" ]] && [[ "$(echo $USERLINE | cut -d: -f2)" == "$2" ]]; then
-			FRIENDS[$1]="$HOSTMASK"
+		if [[ "$(echo $USERLINE | cut -d: -f1)" == "$USERNAME" ]] && [[ "$(echo $USERLINE | cut -d: -f2)" == "$PASSWORD" ]]; then
+			FRIENDS[$HOSTMASK]="$USERNAME"
 			answer ${FRIENDS[@]}
 		fi
 	done
