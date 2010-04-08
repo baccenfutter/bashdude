@@ -75,7 +75,7 @@ while true
 	if [[ "${line:0:1}" == ":" ]]; then
 		. src/main
 	else
-		if [[ "${line:0:4}" == "ping" ]]; then
+		if [[ "${line:0:4}" == "PING" ]]; then
 			. src/global_ping
 		fi
 	fi
