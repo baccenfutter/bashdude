@@ -3,9 +3,9 @@
 NICKCHAR="!"
 
 # cut the irc line into segments for easier naming in modules and further on
-HEADER=$(echo $LINE | cut -d ":" -f 2)
-BODY=${LINE:$(expr ${#HEADER} + 1)}
-HOSTMASK=$(echo $HEADER | cut -d " " -f 1)
+HEADER="$(echo $LINE | cut -d ":" -f 2)"
+BODY="${LINE:$(expr ${#HEADER} + 1)}"
+HOSTMASK="$(echo $HEADER | cut -d " " -f 1)"
 SOURCE_NICK=$(echo $HOSTMASK | cut -d "!" -f 1)
 	#echo "HEADER: $HEADER"
 	#echo "BODY: $BODY"
