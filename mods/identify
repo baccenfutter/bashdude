@@ -32,8 +32,6 @@ case $chan in
 		if [[ "$(echo $userline | cut -d: -f1)" == "$username" ]] && [[ "$(echo $userline | cut -d: -f2)" == "$password" ]]; then
 			friends[${#friends[*]}]="$hostmask"
 			users[${#users[*]}]="$username"
-			answer $friends
-			answer $users
 		fi
 	done
 esac
