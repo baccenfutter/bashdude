@@ -75,6 +75,8 @@ function acl_check
 		user)
 		acl=3
 		;;
+		*)
+		acl=9999
 	esac
 
 	if [[ $acl -le $required_acl ]] ; then
