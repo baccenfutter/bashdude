@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if acl_check owner; then
-	echo "rehashing configuration..."
-	cat mods/*.conf | egrep -v "^#" | egrep -v "^$"
-	. mods/*.conf
-	echo "done!"
-fi

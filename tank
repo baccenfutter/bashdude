@@ -64,10 +64,12 @@ function acl_check
 		;;
 	esac
 
-	if [[ "$(cat $nick.acl | grep \"$hostmask\" | cut -d: -f3)" == $acl ]]; then
-		return 1
-	else
+	echo "»»»ACL_CHECK: $(cat $nick.acl | grep $hostmask | cut -d: -f3)"
+
+	if [[ $(cat $nick.acl | grep $hostmask | cut -d: -f3) == $acl ]]; then
 		return 0
+	else
+		return 1
 	fi
 }
 

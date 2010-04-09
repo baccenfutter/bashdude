@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if acl_check owner; then
+	echo "Rehashing configuration..."
+	. etc/*.conf
+	echo "done!"
+	answer "Successfully rehashed configuration!"
+else
+	answer "I don't think so..."
+fi

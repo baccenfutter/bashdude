@@ -26,7 +26,7 @@ case $chan in
 			answer "Authentication failed!"
 		fi
 	else
-		echo "Warning: $hostmask is trying to identify as $username while already authenticated by $(cat $nick.acl | grep $username | cut -d: -f1)."
+		echo "Warning: $hostmask is trying to identify as $username while allready authenticated by $(cat $nick.acl | grep $username | cut -d: -f1)."
 		answer "Authentication failed! You are allready logged in."
 	fi
 esac
