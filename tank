@@ -54,19 +54,30 @@ function acl_check
 {
 	case $1 in
 		owner)
-		acl=$1
+		required_acl=1
 		;;
 		admin)
-		acl={owner,admin}
+		required_acl=2
 		;;
 		user)
-		acl={owner,admin,user}
+		required_acl=3
 		;;
 	esac
 
-	echo "»»»ACL_CHECK: $(cat $nick.acl | grep $hostmask | cut -d: -f3)"
+	acl="$(cat $nick.acl | grep $hostmask | cut -d: -f3)"
+	case $acl in
+		owner)
+		acl=1
+		;;
+		admin)
+		acl=2
+		;;
+		user)
+		acl=3
+		;;
+	esac
 
-	if [[ $(cat $nick.acl | grep $hostmask | cut -d: -f3) == $acl ]]; then
+	if [[ $acl -le $required_acl ]] ; then
 		return 0
 	else
 		return 1
