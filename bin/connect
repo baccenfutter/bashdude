@@ -8,7 +8,7 @@ owner=$(cat etc/users | grep :owner | cut -d: -f1)
 echo "nick $nick" > $nick.input
 echo "user $nick +iw $nick :$0" >> $nick.input
 (sleep 3
-for channel in $(cat etc/channels)
+for channel in $(cat var/channels)
 do
 	echo "join " $channel >> $nick.input
 done

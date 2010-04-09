@@ -8,8 +8,6 @@ if acl_check admin; then
 	if cat var/channels | grep $channel &> /dev/null ; then
 		answer "How many times do you want me to join that channel, dude?"
 	else
-		echo "Joining $channel..."
-		answer "Joining $channel..."
 		echo $channel $key >> var/channels
 		echo JOIN $channel $key >> $nick.input
 	fi
