@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# acl of $source_nick must be > the acl to be set
+# acl owner can't be set
+# 

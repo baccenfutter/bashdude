@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# admins can create user accs
+# owner can create admin and user accs
+# registration can be disabled in main.conf
+#
