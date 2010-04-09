@@ -58,14 +58,14 @@ function acl_check
 		acl=$1
 		;;
 		admin)
-		acl={owner|admin}
+		acl={owner,admin}
 		;;
 		user)
-		acl={owner|admin|user}
+		acl={owner,admin,user}
 		;;
 	esac
 
-	if [[ "$(cat $nick.acl | grep $hostname | cut -d: -f3)" == $acl ]]; then
+	if [[ "$(cat $nick.acl | grep \"$hostmask\" | cut -d: -f3)" == $acl ]]; then
 		return 1
 	else
 		return 0
