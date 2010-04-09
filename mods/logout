@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if egrep ^$hostmask < $nick.acl > $nick.acl.tmp; then
+	if [[ $(cat $nick.acl | wc -l) == 1 ]]; then echo > $nick.acl && rm $nick.acl.tmp; else mv $nick.acl.tmp $nick.acl; fi
+	answer "Your are no longer logged in, dude."
+else
+	answer "I don't know you, dude"
+fi
