@@ -5,7 +5,6 @@
 
 nick=tank
 server=${1:-localhost}
-channel=${2:-##baccenfutter}
 prefixchar="$"
 
 

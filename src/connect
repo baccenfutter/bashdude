@@ -5,5 +5,10 @@ touch $nick.acl
 
 echo "nick $nick" > $nick.input
 echo "user $nick +iw $nick :$0" >> $nick.input
-(sleep 3; echo "join " $channel >> $nick.input) &
+(sleep 3
+for channel in $(cat etc/channels)
+do
+	echo "join " $channel >> $nick.input
+done
+) &
 
