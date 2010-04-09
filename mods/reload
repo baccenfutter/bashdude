@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "$source_nick" == "$owner" ]]; then
+if acl_check owner; then
 	echo "rehashing configuration..."
 	cat mods/*.conf | egrep -v "^#" | egrep -v "^$"
 	. mods/*.conf
