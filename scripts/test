@@ -1,0 +1,12 @@
+#!/bin/bash
+
+config_echo_enabled=true
+config_echo_full=true
+
+if [[ $config_echo_enabled ]]; then
+	if [[ $config_echo_full ]]; then
+		answer $source_nick: $msg
+	else
+		answer $msg
+	fi
+fi

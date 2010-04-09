@@ -15,36 +15,35 @@ source_nick=$(echo $hostmask | cut -d "!" -f 1)
 if [[ "$hostmask" =~ "${nickchar}" ]]; then
 	# there is a source_nick
 	flag=$(echo $header | cut -d " " -f 2)
-	if [[ "$flag" == "JOIN" ]]; then
+	if [[ "$flag" == "INVITE" ]]; then
 		# yet to come...
 		continue
 	elif [[ "$flag" == "PRIVMSG" ]]; then
 		# we have a privmsg
 		chan=$(echo $header | cut -d " " -f 3)
 		msg=${body:1}
+		command=$(echo $msg | cut -d " " -f 1)
+		params=${msg:$(expr ${#command} + 1)}
 
 		if [[ "${msg:0:1}" == "$prefixchar" ]]; then
 			# we have a command
 			msg=${msg:1}
 		elif echo $msg | egrep "^$nick" &> /dev/null ; then
-			# we have a command, as well
+			# we have a command addressed by nick
 			msg=${msg:$(expr ${#nick} + 2)}
 		elif [[ "$chan" == "$nick" ]]; then
-			echo >> /dev/null
-		else
-			# we do not have a command
 			continue
+		else
+			# we do not have a command, leave for scripts to crawl
+			. scripts/*
+			return
 		fi
-
-		# again, split into segments
-		command=$(echo $msg | cut -d " " -f 1)
-		params=${msg:$(expr ${#command} + 1)}
 
 		# run command module
 		if [[ -f mods/$command ]]; then
 			. mods/$command $params
 		else
-			answer "whatever dude..."
+			answer "I don't know what you are talking about, dude."
 		fi
 	fi
 fi
