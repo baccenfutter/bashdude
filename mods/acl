@@ -2,4 +2,31 @@
 
 # acl of $source_nick must be > the acl to be set
 # acl owner can't be set
-# 
+# owner can't be set
+
+case $1 in
+	set)
+	shift
+	username=$1
+	newacl=$2
+	oldacl=$(egrep ^$username\: < var/users | cut -d: -f3)
+
+	if [[ -z $newacl ]] || [[ -z $oldacl ]] || [[ $username == $owner ]]; then
+		answer "I don't think so, dude."
+		return
+	elif [[ $newacl == $oldacl ]]; then
+		answer "That really wouldn't change much, dude."
+		return
+	elif ! acl_check $(egrep ^$username < var/users | cut -d: -f3); then
+		answer "I'm not sure if you are allowed to do that, dude."
+		return
+	elif acl_check $newacl; then
+		egrep -v ^$username < var/users > var/users.tmp
+		egrep ^$username < var/users | sed "s/$oldacl/$newacl/" >> var/users.tmp && \
+		mv var/users.tmp var/users
+		answer "$username is now $newacl"
+	else
+		answer "Access-control my ass, dude!"
+	fi
+	;;
+esac

@@ -4,3 +4,22 @@
 # owner can create admin and user accs
 # registration can be disabled in main.conf
 #
+
+if config_allow_user_reg || acl_check admin; then
+	username=$1
+	password=$2
+
+	if [[ -z $username ]] || [[ -z $password ]]; then
+		answer "Failed! Usage: register \$username \$password"
+		return
+	elif egrep ^$username: < var/users; then
+		answer "Failed! The user $username allready exists."
+		return
+	else
+		echo "$username:$password:user" >> var/users
+		acl_auth $username $password
+		answer "Account created!"
+	fi
+else
+	answer "Don't think I can do that, dude."
+fi

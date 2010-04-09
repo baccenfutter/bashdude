@@ -3,7 +3,7 @@
 rm $nick.acl &> /dev/null
 touch $nick.acl
 
-owner=$(cat etc/users | grep :owner | cut -d: -f1)
+owner=$(egrep :owner < var/users | cut -d: -f1)
 
 echo "nick $nick" > $nick.input
 echo "user $nick +iw $nick :$0" >> $nick.input
