@@ -1,4 +1,0 @@
-#!/bin/bash
-
-owner=$(cat etc/users | grep :owner | cut -d: -f1)
-
