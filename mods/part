@@ -3,10 +3,10 @@
 channel=${1:-$chan}
 if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
 if acl_check admin; then
-	if cat etc/channels | egrep "^($channel|$channel )" &> /dev/null ; then
+	if cat var/channels | egrep "^($channel|$channel )" &> /dev/null ; then
 		echo "Leaving $channel..."
 		answer "Leaving $channel..."
-		egrep -v "^($channel|$channel )" < etc/channels > etc/channels.tmp && mv etc/channels.tmp etc/channels
+		egrep -v "^($channel|$channel )" < var/channels > var/channels.tmp && mv var/channels.tmp var/channels
 		echo "PART $channel $config_part_message" >> $nick.input
 	fi
 else

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "pong ${line:5}" >> $nick.input
+echo "pong ${line:5}"
+

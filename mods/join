@@ -5,12 +5,12 @@ key=$2
 
 if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
 if acl_check admin; then
-	if cat etc/channels | grep $channel &> /dev/null ; then
+	if cat var/channels | grep $channel &> /dev/null ; then
 		answer "How many times do you want me to join that channel, dude?"
 	else
 		echo "Joining $channel..."
 		answer "Joining $channel..."
-		echo $channel $key >> etc/channels
+		echo $channel $key >> var/channels
 		echo JOIN $channel $key >> $nick.input
 	fi
 else

@@ -4,7 +4,7 @@
 # original code from: sean b. palmer, inamidst.com
 
 # source config
-. etc/*.conf
+. etc/*
 
 function answer
 {
@@ -16,7 +16,7 @@ function answer
 		echo "error: can't send privmsg - missing parameter!"
 		return 0
 	fi
-	line="privmsg"
+	line="PRIVMSG"
 	
 	# check for query or channel
 	if [[ "${chan:0:1}" == "#" ]]; then
@@ -37,7 +37,7 @@ function acl_auth
 	username=$1
 	password=$2
 
-	acl=$(cat etc/users | grep "$username:$password" | cut -d: -f3)
+	acl=$(cat var/users | grep "$username:$password" | cut -d: -f3)
 	
 	if [[ -n $acl ]]; then
 		echo "$hostmask:$username:$acl" >> $nick.acl
@@ -48,30 +48,17 @@ function acl_auth
 function acl_check
 {
 	case $1 in
-		owner)
-		required_acl=1
-		;;
-		admin)
-		required_acl=2
-		;;
-		user)
-		required_acl=3
-		;;
+		owner)required_acl=1;;
+		admin)required_acl=2;;
+		user)required_acl=3;;
 	esac
 
 	acl="$(cat $nick.acl | grep $hostmask | cut -d: -f3)"
 	case $acl in
-		owner)
-		acl=1
-		;;
-		admin)
-		acl=2
-		;;
-		user)
-		acl=3
-		;;
-		*)
-		acl=9999
+		owner)acl=1;;
+		admin)acl=2;;
+		user)acl=3;;
+		*)acl=9999;;
 	esac
 
 	if [[ $acl -le $required_acl ]] ; then
@@ -85,20 +72,19 @@ function acl_check
 
 ### the bot's main body ###
 
-. src/connect
-. src/auth
+. bin/connect
 
-tail -f $nick.input | telnet $server 6667 | \
+tail -f $nick.input | telnet $server $port | \
 while true
 	do read line || break
 
 	echo $(date +%h:%m:%s) $line
 	
 	if [[ "${line:0:1}" == ":" ]]; then
-		. src/main
+		. bin/main
 	else
 		if [[ "${line:0:4}" == "PING" ]]; then
-			. src/global_ping
+			. bin/global_ping
 		fi
 	fi
 done
