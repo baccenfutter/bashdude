@@ -3,5 +3,5 @@
 clist=$(ls mods/)
 clist=${clist/commands/}
 
-answer "commands: $clist"
+answer "Available mods: $clist"
 

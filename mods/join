@@ -12,5 +12,5 @@ if acl_check admin; then
 		echo JOIN $channel $key >> $nick.input
 	fi
 else
-	answer '$join my ass!'
+	answer 'join my ass!'
 fi
