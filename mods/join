@@ -3,7 +3,16 @@
 channel=$1
 key=$2
 
-if [[ "$source_nick" == "baccenfutter" ]]; then
-	echo "join $channel $key" >> $nick.input
+if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
+if acl_check admin; then
+	if cat etc/channels | grep $channel &> /dev/null ; then
+		answer "How many times do you want me to join that channel, dude?"
+	else
+		echo "Joining $channel..."
+		answer "Joining $channel..."
+		echo $channel $key >> etc/channels
+		echo JOIN $channel $key >> $nick.input
+	fi
+else
+	answer '$join my ass!'
 fi
-
