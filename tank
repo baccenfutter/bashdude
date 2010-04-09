@@ -3,12 +3,7 @@
 # author: baccenfutter, c-base.org
 # original code from: sean b. palmer, inamidst.com
 
-nick=tank
-server=${1:-localhost}
-prefixchar="$"
-
-
-# load config
+# source config
 . etc/*.conf
 
 function answer
