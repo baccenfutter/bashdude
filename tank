@@ -36,12 +36,12 @@ function acl_auth
 {
 	username=$1
 	password=$2
-
-	acl=$(cat var/users | grep "$username:$password" | cut -d: -f3)
-	
+	acl=$(egrep ^$username:$password < var/users | cut -d: -f3)
 	if [[ -n $acl ]]; then
 		echo "$hostmask:$username:$acl" >> $nick.acl
-		return
+		return 0
+	else
+		return 1
 	fi
 }
 

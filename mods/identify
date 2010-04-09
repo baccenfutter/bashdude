@@ -6,28 +6,24 @@ password="$2"
 case $chan in
 	# first of all, check if we are authenticating in public
 	\#*)
-	echo "Warning: $source_nick tried identifying in a channel!"
 	answer "Don't identify in a channel, dumb-ass!"
 	if [[ ! "$password" == "" ]]; then
-		echo "Critical: $source_nick identified in a channel! Account [disabled]."
 		answer "Great! Stating your password here was a very smart idea... idot!"
 		answer "I am disabling your account, fool."
-		grep $username < etc/users > etc/users.tmp; mv etc/users.tmp etc/users
+		egrep ^$username: < etc/users > etc/users.tmp; mv etc/users.tmp etc/users
 	fi
 	;;
 	
 	# authenticate
 	*)
-	if [[ -z "$(cat $nick.acl | grep $username)" ]]; then
-		acl_auth $username $password
-		if [[ -n "$(cat $nick.acl | grep $hostmask)" ]]; then
+	if egrep ^$hostmask < $nick.acl &> /dev/null; then
+		answer "Authentication failed! You are allready logged in."
+	else
+		if acl_auth $username $password; then
 			answer "Authentication successfull!"
 		else
 			answer "Authentication failed!"
 		fi
-	else
-		echo "Warning: $hostmask is trying to identify as $username while allready authenticated by $(cat $nick.acl | grep $username | cut -d: -f1)."
-		answer "Authentication failed! You are allready logged in."
 	fi
 esac
 
