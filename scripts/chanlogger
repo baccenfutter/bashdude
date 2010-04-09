@@ -1,0 +1,5 @@
+#!/bin/bash
+
+location=log/$(date +%Y)/$(date +%m)/$(date +%d)/$server/ &> /dev/null
+mkdir -p $location &> /dev/null
+echo $(date +%R:%S) - $msg >> $location/$chan
