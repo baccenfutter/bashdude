@@ -6,13 +6,13 @@ password="$2"
 case $chan in
 	# first of all, check if we are authenticating in public
 	\#*)
-	echo "warning: $source_nick tried identifying in a channel!"
-	answer "don't identify in a channel, dumb-ass!"
+	echo "Warning: $source_nick tried identifying in a channel!"
+	answer "Don't identify in a channel, dumb-ass!"
 	if [[ ! "$password" == "" ]]; then
-		echo "critical: $source_nick identified in a channel! account [disabled]."
-		answer "great! stating your password here was a very smart idea... idot!"
-		answer "i am disabling your account, fool."
-		echo "yet to come..."
+		echo "Critical: $source_nick identified in a channel! Account [disabled]."
+		answer "Great! Stating your password here was a very smart idea... idot!"
+		answer "I am disabling your account, fool."
+		grep $username < etc/users > etc/users.tmp; mv etc/users.tmp etc/users
 	fi
 	;;
 	
@@ -26,7 +26,7 @@ case $chan in
 			answer "Authentication failed!"
 		fi
 	else
-		echo "Warning: $username ist trying to authenticate from $hostmask while logged in from $(cat $nick.acl | grep $username | cut -d: -f1)."
+		echo "Warning: $hostmask is trying to identify as $username while already authenticated by $(cat $nick.acl | grep $username | cut -d: -f1)."
 		answer "Authentication failed! You are allready logged in."
 	fi
 esac
