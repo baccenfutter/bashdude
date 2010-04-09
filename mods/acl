@@ -4,16 +4,17 @@
 # acl owner can't be set
 # owner can't be set
 
+
 case $1 in
-	set)
+	chg)
 	shift
 	username=$1
 	newacl=$2
 	oldacl=$(egrep ^$username\: < var/users | cut -d: -f3)
 
 	if [[ -z $newacl ]] || [[ -z $oldacl ]] || [[ $username == $owner ]]; then
-		answer "I don't think so, dude."
-		return
+	answer "I don't think so, dude."
+	return
 	elif [[ $newacl == $oldacl ]]; then
 		answer "That really wouldn't change much, dude."
 		return
@@ -27,6 +28,24 @@ case $1 in
 		answer "$username is now $newacl"
 	else
 		answer "Access-control my ass, dude!"
+	fi
+	;;
+	del)
+	shift
+	username=$1
+	if [[ -z $username ]]; then
+		answer "Usage: acl del \$username"
+		return
+	elif [[ $username == $owner ]]; then
+		answer "I wouldn't dare to delete my owner's account, dude."
+		return
+	elif ! egrep ^$username < var/users; then
+		answer "Failed! User $username doesn't exist"
+		return
+	else
+		egrep -v ^$username < var/users > var/users.tmp && \
+		mv var/users.tmp var/users
+		answer "Account $username deleted!"
 	fi
 	;;
 esac

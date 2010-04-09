@@ -5,7 +5,7 @@
 # registration can be disabled in main.conf
 #
 
-if config_allow_user_reg || acl_check admin; then
+if ${config_allow_user_reg} || acl_check admin; then
 	username=$1
 	password=$2
 
@@ -17,8 +17,8 @@ if config_allow_user_reg || acl_check admin; then
 		return
 	else
 		echo "$username:$password:user" >> var/users
-		acl_auth $username $password
-		answer "Account created!"
+		grep $hostmask < $nick.acl &> /dev/null || acl_auth $username $password
+		answer "Account $username created!"
 	fi
 else
 	answer "Don't think I can do that, dude."
