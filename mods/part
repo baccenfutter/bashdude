@@ -1,14 +1,17 @@
 #!/bin/bash
+# Script: part
+# Description: Script for parting from a channel
+#
+# Required ACL: admin
+# 
+# - Can be passed directly from #channel without arguments
+# - Can be passed as query with #channel as argument
+# - The '#' will be prepended automatically if forgotten
 
 channel=${1:-$chan}
 if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
 if acl_check admin; then
-	if cat var/channels | egrep "^($channel|$channel )" &> /dev/null ; then
-		if [[ $(cat var/channels | wc -l) -ne 1 ]]; then 
-			egrep -v "^($channel|$channel )" < var/channels > var/channels.tmp && mv var/channels.tmp var/channels || echo "" > var/channels
-		else
-			echo "" > var/channels
-		fi
+	if egrep "^($channel$|$channel *$)" < var/channels; then
 		echo "PART :$channel" >> $nick.input
 	else
 		answer "That's the first thing I'll do, as soon as I've joined $channel"

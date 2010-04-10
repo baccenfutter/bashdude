@@ -1,14 +1,22 @@
 #!/bin/bash
+# Script: join
+# Description: Script for joining a channel
+#
+# Required ACL: admin
+# 
+# - Can be passed directly from #channel with no arguments
+# - Can be passed as query with #channel as argument
+# - The '#' will be prepended automatically if forgotten
+# - Channel key can be passed as additional argument
 
 channel=$1
 key=$2
 
 if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
 if acl_check admin; then
-	if cat var/channels | grep $channel &> /dev/null ; then
+	if egrep "^($channel$|$channel $)" < var/channels ; then
 		answer "How many times do you want me to join that channel, dude?"
 	else
-		echo $channel $key >> var/channels
 		echo JOIN $channel $key >> $nick.input
 	fi
 else

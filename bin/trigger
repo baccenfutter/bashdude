@@ -7,9 +7,18 @@ chan=$(echo $header | cut -d " " -f 3)
 msg=${body:1}
 
 case $flag in
+	JOIN)
+		egrep "^($msg$|$msg $)" < var/channels &> /dev/null || echo $msg >> var/channels
+		continue
+		;;
+	PART)
+		# since part messages don't come with the colon, we have to trick around a bit
+		msg=$(echo $line | cut -d ' ' -f3)
+		egrep -v "^($msg$|$msg $)" < var/channels > var/channels.tmp && mv var/channels.tmp var/channels || echo "" > var/channels && rm var/channels.tmp
+		;;
 	INVITE)
 		. mods/join $msg
-		return
+		continue
 		;;
 	KICK)
 		# todo
