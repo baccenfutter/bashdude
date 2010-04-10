@@ -38,10 +38,10 @@ case $flag in
 			echo "" >> /dev/null
 		elif [[ "${msg:0:1}" == "$prefixchar" ]]; then
 			# we have a command
-			msg=${msg:1}
+			command=${msg:1}
 		elif echo $msg | egrep "^$nick" &> /dev/null ; then
 			# we have a command addressed by nick
-			msg=${msg:$(expr ${#nick} + 2)}
+			command=${msg:$(expr ${#nick} + 2)}
 		else
 			# we do not have a command, leave for scripts to crawl an return
 			. scripts/*
