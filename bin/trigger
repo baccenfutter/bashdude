@@ -1,6 +1,11 @@
 #!/bin/bash
 # Script: trigger
-# Description: Script for processing irc message flags
+# Description: This is the trigger engine. It crawls for IRC flags and triggers
+#              the corresponding mods or scripts.
+#
+# - Manages the handling of $flag
+# - Initiates corresponding modules if a command is triggered
+# - Inititates the background scripts
 
 # create channel and message segments
 chan=$(echo $header | cut -d " " -f 3)

@@ -1,7 +1,29 @@
 #!/usr/bin/env bash
-# shellbot.sh - irc bot
-# author: baccenfutter, c-base.org
-# original code from: sean b. palmer, inamidst.com
+# Script: bashbot
+# Description: A simple modular IRC bot written in Bash
+# Author: baccenfutter, c-base.org
+# Inspired by: Sean B. Palmer, inamidst.com
+#
+# - The basic idea is while loop that uses telnet as communication interface
+#   with the IRC network. Communication input is piped into telnet using an
+#   input file. Output is piped into the while loop and parsed by a read
+#   command.
+#   The allmighty super-cow powers of the source command allow a clean
+#   file and directory structure, which allows modular programming, keeping the
+#   performance requirements as low as possible for every read input line.
+#   Additionally, using the source command to run sub-scripts within the parent
+#   script allows use of one big namespace for all variables.
+#
+# - Initiates main loop
+# - Provides three fundamental functions:
+#   - answer()
+#     Assembles a PRIVMSG and sends it to the network
+#   - acl_auth()
+#     Provides a basic authentication routine
+#   - acl_check()
+#     Takes required ACL and compares with the ACL of the user initiating the
+#     command.
+# - Calls the main input line crawler -> bin/main
 
 # source config
 . etc/*

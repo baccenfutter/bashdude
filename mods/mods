@@ -1,7 +1,0 @@
-#!/bin/bash
-
-clist=$(ls mods/)
-clist=${clist/commands/}
-
-answer "Available mods: $clist"
-

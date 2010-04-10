@@ -1,5 +1,10 @@
 #!/bin/bash
+# Script: chanlogger
+# Description: Basic channel logging script
+#
+# - Creates $directory log/%Y/%m/%d/$server
+# - Timestamped logging takes place in $directory/$chan
 
-location=log/$(date +%Y)/$(date +%m)/$(date +%d)/$server/ &> /dev/null
-mkdir -p $location &> /dev/null
-echo $(date +%R:%S) - $msg >> $location/$chan
+directory=log/$(date +%Y)/$(date +%m)/$(date +%d)/$server/ &> /dev/null
+mkdir -p $directory &> /dev/null
+echo $(date +%R:%S) - $msg >> $directory/$chan

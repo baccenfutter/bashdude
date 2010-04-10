@@ -1,3 +1,10 @@
 #!/bin/bash
+# Script whoami
+# Description: ACL verification script
+#
+# - Tells you your ACL and username if logged in
+# - Replies 'unknown' if not logged in
 
-egrep ^$hostmask < $nick.acl &> /dev/null && answer $(egrep ^$hostmask < $nick.acl | cut -d: -f2) || answer "I don't know you, dude."
+egrep ^$hostmask < $nick.acl &> /dev/null && \
+	answer $(egrep ^$hostmask < $nick.acl | cut -d: -f3) "->" $(egrep ^$hostmask < $nick.acl | cut -d: -f2) \
+|| answer "I don't know you, dude."

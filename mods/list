@@ -1,0 +1,8 @@
+#!/bin/bash
+# Script: list
+# Description: lists all available modules
+#
+# 
+
+answer "Available mods: $(ls mods/)"
+

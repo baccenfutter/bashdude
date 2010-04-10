@@ -1,4 +1,10 @@
 #!/bin/bash
+# Script: identify
+# Description: Login interface for known users
+#
+# - Authentication in a channel is prohibited
+# - Authenticates user
+# - Associates $hostmask with $user and $acl
 
 username="$1"
 password="$2"

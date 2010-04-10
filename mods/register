@@ -1,11 +1,10 @@
 #!/bin/bash
-
-# admins can create user accs
-# owner can create admin and user accs
-# registration can be disabled in main.conf
+# Script: register
+# Description: CLI for account registration
 #
+# - Registration can be disabled with $config_allow_user_reg=false
 
-if ${config_allow_user_reg} || acl_check admin; then
+if [[ ${config_allow_user_reg} ]] || acl_check admin; then
 	username=$1
 	password=$2
 

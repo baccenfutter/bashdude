@@ -1,5 +1,10 @@
 #!/bin/bash
+# Script: global_ping
+# Description: Script for answering to keep-alive pings
+#
+# - Sends PONG to irc server
+# - Outputs the PONG to stdout
 
-echo "pong ${line:5}" >> $nick.input
-echo "pong ${line:5}"
+echo "PONG ${line:5}" >> $nick.input
+echo "PONG ${line:5}"
 

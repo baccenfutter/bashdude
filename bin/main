@@ -1,10 +1,14 @@
 #!/bin/bash
-# split line into segments: $head $body $hostmask $source_nick $flag 
+# Script: main
+# Description: Script for crawling incoming irc lines
 #
-# These variables are used throughout the entire script for further processing
-# and addressing reply messages, so this is basically where the magic happens.
+# - Splits line into segments: $head $body $hostmask $source_nick $flag 
 #
-# If a nickname is found in the message line we pass over to the trigger engine.
+# - These variables are used throughout the entire script for further processing
+#   and addressing reply messages, so this is basically where the magic happens.
+#
+# - If a nickname is found in the message line, we assume some sort of chat event
+#   and pass over to the trigger engine.
 
 nickchar="!"
 

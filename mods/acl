@@ -1,9 +1,10 @@
 #!/bin/bash
-
-# acl of $source_nick must be > the acl to be set
-# acl owner can't be set
-# owner can't be set
-
+# Script: acl
+# Description: CLI for ACL management
+#
+# - ACL of $source_nick must be > the acl to be set
+# - ACL 'owner' can't be set
+# - $owner can't be modified
 
 case $1 in
 	chg)

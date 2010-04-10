@@ -1,4 +1,8 @@
 #!/bin/bash
+# Script: rehash
+# Description: Script for rehashing main.conf
+#
+# - Rehash etc/main.conf and log in stdout
 
 if acl_check owner; then
 	echo "Rehashing configuration..."
