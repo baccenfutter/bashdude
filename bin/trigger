@@ -1,0 +1,44 @@
+#!/bin/bash
+# Script: trigger
+# Description: Script for processing irc message flags
+
+# create channel and message segments
+chan=$(echo $header | cut -d " " -f 3)
+msg=${body:1}
+
+case $flag in
+	INVITE)
+		. mods/join $msg
+		return
+		;;
+	KICK)
+		# todo
+		continue
+		;;
+	PRIVMSG)
+		# create command and params segments
+		command=$(echo $msg | cut -d " " -f 1)
+		params=${msg:$(expr ${#command} + 1)}
+		if [[ $chan == $nick ]]; then
+			# We expect all queries to be commands only
+			echo "" >> /dev/null
+		elif [[ "${msg:0:1}" == "$prefixchar" ]]; then
+			# we have a command
+			msg=${msg:1}
+		elif echo $msg | egrep "^$nick" &> /dev/null ; then
+			# we have a command addressed by nick
+			msg=${msg:$(expr ${#nick} + 2)}
+		else
+			# we do not have a command, leave for scripts to crawl an return
+			. scripts/*
+			return
+		fi
+		
+		# source according command module or reply with error
+		if [[ -f mods/$command ]]; then
+			. mods/$command $params
+		else
+			answer "I don't know what you are talking about, dude."
+		fi
+		;;
+esac

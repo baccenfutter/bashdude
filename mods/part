@@ -5,7 +5,7 @@ if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
 if acl_check admin; then
 	if cat var/channels | egrep "^($channel|$channel )" &> /dev/null ; then
 		if [[ $(cat var/channels | wc -l) -ne 1 ]]; then 
-			egrep -v "^($channel|$channel )" < var/channels > var/channels.tmp && mv var/channels.tmp var/channels
+			egrep -v "^($channel|$channel )" < var/channels > var/channels.tmp && mv var/channels.tmp var/channels || echo "" > var/channels
 		else
 			echo "" > var/channels
 		fi

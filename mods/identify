@@ -7,10 +7,10 @@ case $chan in
 	# first of all, check if we are authenticating in public
 	\#*)
 	answer "Don't identify in a channel, dumb-ass!"
-	if [[ ! "$password" == "" ]]; then
+	if [[ -n "$password" ]]; then
 		answer "Great! Stating your password here was a very smart idea... idot!"
 		answer "I am disabling your account, fool."
-		egrep ^$username: < etc/users > etc/users.tmp; mv etc/users.tmp etc/users
+		egrep ^$username: < var/users > var/users.tmp; mv var/users.tmp var/users
 	fi
 	;;
 	

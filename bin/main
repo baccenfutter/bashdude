@@ -1,49 +1,20 @@
 #!/bin/bash
+# split line into segments: $head $body $hostmask $source_nick $flag 
+#
+# These variables are used throughout the entire script for further processing
+# and addressing reply messages, so this is basically where the magic happens.
+#
+# If a nickname is found in the message line we pass over to the trigger engine.
 
 nickchar="!"
 
-# cut the irc line into segments for easier naming in modules and further on
 header="$(echo $line | cut -d ":" -f 2)"
 body="${line:$(expr ${#header} + 1)}"
 hostmask="$(echo $header | cut -d " " -f 1)"
-source_nick=$(echo $hostmask | cut -d "!" -f 1)
-	#echo "header: $header"
-	#echo "body: $body"
-	#echo "hostmask: $hostmask"
-	#echo "source_nick: $source_nick"
 
 if [[ "$hostmask" =~ "${nickchar}" ]]; then
 	# there is a source_nick
+	source_nick=$(echo $hostmask | cut -d "!" -f 1)
 	flag=$(echo $header | cut -d " " -f 2)
-	if [[ "$flag" == "INVITE" ]]; then
-		# yet to come...
-		continue
-	elif [[ "$flag" == "PRIVMSG" ]]; then
-		# we have a privmsg
-		chan=$(echo $header | cut -d " " -f 3)
-		msg=${body:1}
-		command=$(echo $msg | cut -d " " -f 1)
-		params=${msg:$(expr ${#command} + 1)}
-
-		if [[ "${msg:0:1}" == "$prefixchar" ]]; then
-			# we have a command
-			msg=${msg:1}
-		elif echo $msg | egrep "^$nick" &> /dev/null ; then
-			# we have a command addressed by nick
-			msg=${msg:$(expr ${#nick} + 2)}
-		elif [[ "$chan" == "$nick" ]]; then
-			continue
-		else
-			# we do not have a command, leave for scripts to crawl
-			. scripts/*
-			return
-		fi
-
-		# run command module
-		if [[ -f mods/$command ]]; then
-			. mods/$command $params
-		else
-			answer "I don't know what you are talking about, dude."
-		fi
-	fi
+	. bin/trigger
 fi

@@ -6,16 +6,17 @@
 # source config
 . etc/*
 
-function answer
+answer()
 {
-	msg="$@"
-	line=""
+	msg=$@
+	line=''
 	
 	# first, fetch errors
 	if [[ "$msg" == "" ]]; then
 		echo "error: can't send privmsg - missing parameter!"
 		return 0
 	fi
+	# start assembling the response line
 	line="PRIVMSG"
 	
 	# check for query or channel
@@ -32,20 +33,14 @@ function answer
 	echo "$line" >> $nick.input
 }
 
-function acl_auth
+acl_auth()
 {
-	username=$1
-	password=$2
-	acl=$(egrep ^$username:$password < var/users | cut -d: -f3)
-	if [[ -n $acl ]]; then
-		echo "$hostmask:$username:$acl" >> $nick.acl
-		return 0
-	else
-		return 1
-	fi
+	acl=$(egrep "^$username:$password" < var/users | cut -d: -f3)
+	[[ -n $acl ]] && echo "$hostmask:$username:$acl" >> $nick.acl && return 0
+	return 1
 }
 
-function acl_check
+acl_check()
 {
 	case $1 in
 		owner)required_acl=1;;
@@ -78,7 +73,7 @@ tail -f $nick.input | telnet $server $port | \
 while true
 	do read line || break
 
-	echo $(date +%h:%m:%s) $line
+	echo $(date +%H:%M:%S) $line
 	
 	if [[ "${line:0:1}" == ":" ]]; then
 		. bin/main

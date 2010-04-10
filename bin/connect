@@ -10,7 +10,7 @@ echo "user $nick +iw $nick :$0" >> $nick.input
 (sleep 3
 for channel in $(cat var/channels)
 do
-	echo "join " $channel >> $nick.input
+	[[ -n $channel ]] && echo "join " $channel >> $nick.input
 done
 ) &
 
