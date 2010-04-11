@@ -7,8 +7,15 @@
 # - These variables are used throughout the entire script for further processing
 #   and addressing reply messages, so this is basically where the magic happens.
 #
-# - If a nickname is found in the message line, we assume some sort of chat event
-#   and pass over to the trigger engine.
+# - If a nickname is found in the message line, we assume some sort of chat
+#   event and pass over to the trigger engine.
+#
+# - I just realized that it would be much smarter to just loop through the
+#   entire line word by word as in:
+#   for word in $(echo $line); do echo $word; done
+#
+#   I'll put some more thoughts into it first, though before restructoring the
+#   entire bot just cause it seemed smart.
 
 nickchar="!"
 

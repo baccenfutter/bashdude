@@ -2,7 +2,8 @@
 # Script: list
 # Description: lists all available modules
 #
-# 
+# - Lists all modules in mods/
+# - Allows passing a module as argument, echoing its comment header
 
 [[ -z $params ]] && answer "Available modules: $(ls mods/)" && return
 [[ ! -f mods/$params ]] && answer "Help yourself, dude!" && return
