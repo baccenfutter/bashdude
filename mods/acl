@@ -5,6 +5,10 @@
 # - ACL of $source_nick must be > the acl to be set
 # - ACL 'owner' can't be set
 # - $owner can't be modified
+#
+# Subcommands:
+# - chg	$nick	-	Changes ACL of $nick
+# - del $nick	-	Deletes the ACL of $nick, thus deleting his account
 
 case $1 in
 	chg)

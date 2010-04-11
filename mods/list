@@ -4,5 +4,12 @@
 #
 # 
 
-answer "Available mods: $(ls mods/)"
+[[ -z $params ]] && answer "Available modules: $(ls mods/)" && return
+[[ ! -f mods/$params ]] && answer "Help yourself, dude!" && return
+
+while read helpline
+do
+	echo $helpline
+	( [[ ${helpline:0:1} == "#" ]] || [[ ${helpline:0:1} == "S" ]] ) && answer $helpline || return
+done < mods/$params
 
