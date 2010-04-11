@@ -39,12 +39,13 @@ case $flag in
 			# then create $command and $params segments
 			command=$(echo $msg | cut -d ' ' -f 1)
 			params=${msg:$(expr ${#command} + 1)}
-		elif [[ "${msg:0:1}" == "$prefixchar" ]]; then
+		fi
+		if [[ "${msg:0:1}" == "$prefixchar" ]]; then
 			# we have a command addressed by $prefixchar
 			# cut the $prefixchar and create segments $command and $params
 			command=$(echo $msg | cut -d ' ' -f 1)
 			command=${command:1}
-			params=${msg:$(expr ${#command} + 1)}
+			params=${msg:$(expr ${#command} + 2)}
 		else
 			# we could have a command in a query
 			command=$(echo $msg | cut -d ' ' -f 1)
