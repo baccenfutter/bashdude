@@ -1,0 +1,36 @@
+#!/bin/bash
+# Script: privmsg
+# Description: Script for handling IRC PRIVMSGs
+
+# create command and params segments
+if echo $msg | egrep "^$nick" &> /dev/null ; then
+	# we have a command addressed by nick
+	# first, cut the prepending nick from the line
+	nick_prefix=$(echo $msg | cut -d ' ' -f 1)
+	msg=${msg:$(expr ${#nick_prefix} + 1)}
+	# then create $command and $params segments
+	command=$(echo $msg | cut -d ' ' -f 1)
+	params=${msg:$(expr ${#command} + 1)}
+fi
+if [[ "${msg:0:1}" == "$prefixchar" ]]; then
+	# we have a command addressed by $prefixchar
+	# cut the $prefixchar and create segments $command and $params
+	command=$(echo $msg | cut -d ' ' -f 1)
+	command=${command:1}
+	params=${msg:$(expr ${#command} + 2)}
+else
+	# we could have a command in a query
+	command=$(echo $msg | cut -d ' ' -f 1)
+	params=${msg:$(expr ${#command} + 1)}
+fi
+
+# Let the background scripts parse the msg first
+. scripts/*
+
+# Finally, source corresponding command module or reply with error
+if [[ -f mods/$command ]]; then
+	. mods/$command $params
+else
+	answer "I don't know what you are talking about, dude."
+fi
+
