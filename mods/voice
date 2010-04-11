@@ -1,0 +1,12 @@
+#!/bin/bash
+# Script: voice
+# Description: Script for handing +v to users
+#
+# Required ACL: admin
+#
+# - Takes $nick_to_voice as argument.
+
+nick_to_voice=${1:-$source_nick}
+
+acl_check admin && mode_check "op" $chan && echo MODE $chan +v $nick_to_voice >> $nick.input || answer "Dude, check my permissions... I can't do that here"
+

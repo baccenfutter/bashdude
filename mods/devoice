@@ -1,0 +1,12 @@
+#!/bin/bash
+# Script: devoice
+# Description: Script for handing -v to users
+#
+# Required ACL: admin
+#
+# - Takes $nick_to_devoice as argument.
+
+nick_to_devoice=${1:-$source_nick}
+
+acl_check admin && mode_check "op" $chan && echo MODE $chan -v $nick_to_devoice >> $nick.input || answer "Dude, check my permissions... I can't do that here"
+
