@@ -7,4 +7,4 @@
 
 directory=log/$(date +%Y)/$(date +%m)/$(date +%d)/$server/ &> /dev/null
 mkdir -p $directory &> /dev/null
-echo $(date +%R:%S) - $msg >> $directory/$chan
+echo $(date +%R:%S) - $source_nick: $msg >> $directory/$chan
