@@ -1,0 +1,35 @@
+BashDude - a simple bodular IRC bot written in bash
+
+This script is a work-in-progress bash scripting homework collection. It was
+never meant for professional use in any way, more rather for playing-around
+purposes.
+
+It all started when I first got into bash scripting. I stumbled over a small
+14 line long plain irc bot bash script over at inamidst.com and somehow got
+myself hooked to the idea.
+
+I remember back when taking my first steps extending the bot people where
+having a hard time supporting me with my bash-related questions always stating
+that bash just isn't the proper language for that kind of task. Well, in the
+end I guess I agree with you, but the aim was never to write a good irc bot in,
+the first place - it is just a self-assigned bash homework.
+
+And just to proove that it IS possible, at the end, here is the result ;-P
+
+THE IDEA:
+- The idea is to have an input file for messages, which are to be sent to the
+  network, tail-piped to a telnet client, which does all the socket handling
+  for us. The output of that telnet client is piped into a while loop. Incoming
+  messages are fetched with `read line` for further processing. This setup
+  allows basic two-way communication with an irc server. Incoming message lines
+  can be parsed and replies can be echoed into the input file.
+- The big aim is to keep ressource requirements and execution time for the line
+  parsing as low as possible.
+- We take advantage of the allmighty super-cow powers the source command
+  offers. The advantages lay in a modular design by directory and filenames like
+  known from other languages and in the ability to use one big namespace for all
+  variables.
+
+CONFIGURATION:
+- The bot's main configuration file is etc/main.conf you may want to adjust this
+  before starting the bot for the first time.
