@@ -25,6 +25,11 @@ case $flag in
 		. mods/join $msg
 		continue
 		;;
+	MODE)
+		mode=$(echo $line | cut -d ' ' -f 4)
+		mode_nick=$(echo $line | cut -d ' ' -f 5)
+		. bin/triggers/mode
+		;;
 	KICK)
 		# todo
 		continue

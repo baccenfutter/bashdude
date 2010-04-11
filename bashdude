@@ -15,14 +15,16 @@
 #   script allows use of one big namespace for all variables.
 #
 # - Initiates main loop
-# - Provides three fundamental functions:
-#   - answer()
-#     Assembles a PRIVMSG and sends it to the network
-#   - acl_auth()
-#     Provides a basic authentication routine
-#   - acl_check()
-#     Takes required ACL and compares with the ACL of the user initiating the
-#     command.
+# - Provides four fundamental functions:
+#   1. answer()
+#      Assembles a PRIVMSG and sends it to the network
+#   2. acl_auth()
+#      Provides a basic authentication routine
+#   3. acl_check()
+#      Takes required ACL and compares with the ACL of the user initiating the
+#      command.
+#   4. mode_check()
+#      Verifies if bot has $mode in $chan.
 # - Calls the main input line crawler -> bin/main
 
 # source config
@@ -85,7 +87,26 @@ acl_check()
 	fi
 }
 
-
+mode_check()
+{
+	required_mode=$1
+	chan=$2
+	case $required_mode in
+		voice)
+			for my_voice_chan in $(echo $my_voice_chans)
+			do
+				[[ $my_voice_chan == $chan ]] && return 0
+			done
+			;;
+		op)
+			for my_op_chan in $(echo $my_op_chans)
+			do
+				[[ $my_op_chan == $chan ]] && return 0
+			done
+			;;
+	esac
+	return 1
+}
 
 ### the bot's main body ###
 

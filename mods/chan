@@ -1,0 +1,29 @@
+#!/bin/bash
+# Script: chan
+# Description: CLI to the bot's channel manager
+#
+# - Takes sub-commands:
+#   - list			-	Lists all channels the bot is in
+#   - list voice
+#   - list op
+
+subcmd="$1"
+arg="$2"
+
+case $subcmd in
+	list)
+		if [[ -z $arg ]]; then
+			answer "Here comes my channel list, dude:"
+			while read chan_line
+			do
+				[[ -n $chan_line ]] && answer $chan_line
+			done < var/channels
+		elif [[ $arg == 'voice' ]]; then
+			answer "Channels that listen to me:" $my_voice_chans
+		elif [[ $arg == 'op' ]]; then
+			answer "Channels I own:" $my_op_chans
+		else
+			echo 
+		fi
+		;;
+esac

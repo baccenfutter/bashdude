@@ -1,0 +1,35 @@
+#!/bin/bash
+# Script: mode
+# Description: Script for handling mode changes
+
+# first, split into segments $mode and $mode_nick
+# check if mode change is addressed to us, if so, process it
+[[ $mode_nick == $nick ]] && case $mode in
+	'+v')
+		my_voice_chans=$(echo $my_voice_chans $chan)
+		return
+		;;
+	'+o')
+		my_op_chans=$(echo $my_op_chans $chan)
+		return
+		;;
+	'-v')
+		for my_voice_chan in $(echo $my_voice_chans)
+		do
+			[[ $my_voice_chan == $chan ]] || tmp=$(echo $tmp $my_voice_chan)
+		done
+		my_voice_chans=$tmp
+		return
+		;;
+	'-o')
+		for my_op_chan in $(echo $my_op_chans)
+		do
+			[[ $my_op_chan == $chan ]] || tmp=$(echo $tmp $my_op_chan)
+		done
+		my_op_chans=$tmp
+		return
+		;;
+	*)
+		echo "I dont know the mode $mode, dude."
+		;;
+esac
