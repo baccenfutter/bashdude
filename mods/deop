@@ -1,0 +1,11 @@
+#!/bin/bash
+# Script: deop
+# Description: Script for handing -o to users
+#
+# Required ACL: admin
+#
+# - Takes $nick_to_deop as argument.
+
+nick_to_deop=${1:-$source_nick}
+
+acl_check admin && echo MODE $chan -o $nick_to_deop >> $nick.input
