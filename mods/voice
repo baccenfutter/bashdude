@@ -8,5 +8,5 @@
 
 nick_to_voice=${1:-$source_nick}
 
-acl_check admin && mode_check "op" $chan && echo MODE $chan +v $nick_to_voice >> $nick.input || answer "Dude, check my permissions... I can't do that here"
+acl_check admin && mode_check "op" $chan && echo MODE $chan +v $nick_to_voice >> $nick.input || answer "Check permissions, dude!"
 
