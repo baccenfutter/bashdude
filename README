@@ -33,3 +33,5 @@ THE IDEA:
 CONFIGURATION:
 - The bot's main configuration file is etc/main.conf you may want to adjust this
   before starting the bot for the first time.
+- The user file is var/users
+- The channel auto-join file is var/channels
