@@ -27,10 +27,6 @@ fi
 # Let the background scripts parse the msg first
 . scripts/*
 
-# Finally, source corresponding command module or reply with error
-if [[ -f mods/$command ]]; then
-	. mods/$command $params
-else
-	answer "I don't know what you are talking about, dude."
-fi
-
+# Finally, source corresponding command module
+[[ -f mods/$command ]] || return
+. mods/$command $params
