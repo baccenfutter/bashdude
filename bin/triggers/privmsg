@@ -24,8 +24,9 @@ else
 	params=${msg:$(expr ${#command} + 1)}
 fi
 
-# Let the background scripts parse the msg first
-. scripts/*
+# write line to channel file
+mkdir -p var/run/channels/$server/
+echo $(date +%F) $(date +%H:%M:%S) $source_nick $body >> var/run/channels/$server/$chan
 
 # Finally, source corresponding command module
 [[ -f mods/$command ]] || return

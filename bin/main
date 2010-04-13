@@ -20,7 +20,7 @@
 nickchar="!"
 
 header="$(echo $line | cut -d ":" -f 2)"
-body="${line:$(expr ${#header} + 1)}"
+body="${line:$(expr ${#header} + 2)}"
 hostmask="$(echo $header | cut -d " " -f 1)"
 
 if [[ "$hostmask" =~ "${nickchar}" ]]; then
