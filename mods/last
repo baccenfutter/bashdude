@@ -1,0 +1,17 @@
+#!/bin/bash
+# Script: last
+# Description: Script for searching through logs reversely
+#
+# - This is just a very basic solution for backlog searching. It should really
+#   be beautified some time in the near future
+
+searchterm=$@
+
+[[ -z $searchterm ]] && answer "Specify a search term, dude!" && return
+
+grep -r "$searchterm" log/ | tac | head | while true
+do read line || break
+	answer $line
+done
+
+
