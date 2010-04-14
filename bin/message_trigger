@@ -20,8 +20,7 @@ case $flag in
 		;;
 	PART)
 		# since part messages don't come with the colon, we have to trick around a bit
-		msg=$(echo $line | cut -d ' ' -f3)
-		egrep -v "^($msg$|$msg $)" < var/channels > var/channels.tmp && mv var/channels.tmp var/channels || echo "" > var/channels && rm var/channels.tmp
+		rm -f var/run/$server/$chan
 		continue
 		;;
 	INVITE)

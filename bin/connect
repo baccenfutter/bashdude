@@ -11,6 +11,7 @@
 inputfile=var/$nick.input
 aclfile=var/$nick.acl
 
+rm -rf var/run/*
 rm $aclfile &> /dev/null
 touch $aclfile
 
