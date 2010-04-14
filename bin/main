@@ -25,7 +25,8 @@ hostmask="$(echo $header | cut -d " " -f 1)"
 
 if [[ "$hostmask" =~ "${nickchar}" ]]; then
 	# there is a source_nick
-	source_nick=$(echo $hostmask | cut -d "!" -f 1)
-	flag=$(echo $header | cut -d " " -f 2)
-	. bin/trigger
+	. bin/message_trigger
+else
+	# a server message is incoming
+	. bin/server_trigger
 fi

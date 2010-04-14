@@ -7,7 +7,9 @@
 # - Initiates corresponding modules if a command is triggered
 # - Inititates the background scripts
 
-# create channel and message segments
+# create source_nick, flag, channel and message segments
+source_nick=$(echo $hostmask | cut -d "!" -f 1)
+flag=$(echo $header | cut -d " " -f 2)
 chan=$(echo $header | cut -d " " -f 3)
 msg=${body}
 
