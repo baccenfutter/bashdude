@@ -18,7 +18,7 @@ touch $aclfile
 owner=$(egrep :owner < var/users | cut -d: -f1)
 
 echo "nick $nick" > $inputfile
-echo "user $nick +iw $nick :$0" >> $inputfile
+echo "user $nick +iw $owner :$nick" >> $inputfile
 (sleep 3
 for channel in $(cat var/channels)
 do

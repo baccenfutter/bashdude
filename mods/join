@@ -12,6 +12,8 @@
 channel=$1
 key=$2
 
+[[ -z $channel ]] && return
+
 if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
 if acl_check admin; then
 		[[ -f var/run/$server/$channel ]] && answer "How many times do you want me to join that channel, dude?" || echo JOIN $channel $key >> $inputfile

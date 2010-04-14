@@ -35,10 +35,10 @@ case $flag in
 		;;
 	KICK)
 		# todo
-		continue
+		return
 		;;
 	PRIVMSG)
 		. bin/message_triggers/privmsg
-		continue
+		return
 		;;
 esac
