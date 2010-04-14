@@ -25,8 +25,8 @@ else
 fi
 
 # write line to channel file
-mkdir -p var/run/channels/$server/
-echo $(date +%F) $(date +%H:%M:%S) $source_nick $body >> var/run/channels/$server/$chan
+[[ -d log/$server ]] || mkdir -p log/$server/
+echo $(date +%F) $(date +%H:%M:%S) $source_nick $body >> log/$server/$chan
 
 # Finally, source corresponding command module
 [[ -f mods/$command ]] || return
