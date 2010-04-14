@@ -15,13 +15,14 @@ msg=${body}
 
 case $flag in
 	JOIN)
-		egrep "^($msg$|$msg $)" < var/channels &> /dev/null || echo $msg >> var/channels
+		#egrep "^($msg$|$msg $)" < var/channels &> /dev/null || echo $msg >> var/channels
 		continue
 		;;
 	PART)
 		# since part messages don't come with the colon, we have to trick around a bit
 		msg=$(echo $line | cut -d ' ' -f3)
 		egrep -v "^($msg$|$msg $)" < var/channels > var/channels.tmp && mv var/channels.tmp var/channels || echo "" > var/channels && rm var/channels.tmp
+		continue
 		;;
 	INVITE)
 		. mods/join $msg
@@ -30,13 +31,14 @@ case $flag in
 	MODE)
 		mode=$(echo $line | cut -d ' ' -f 4)
 		mode_nick=$(echo $line | cut -d ' ' -f 5)
-		. bin/triggers/mode
+		. bin/message_triggers/mode
 		;;
 	KICK)
 		# todo
 		continue
 		;;
 	PRIVMSG)
-		. bin/triggers/privmsg
+		. bin/message_triggers/privmsg
+		continue
 		;;
 esac

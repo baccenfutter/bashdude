@@ -1,0 +1,13 @@
+#!/bin/bash
+# Script: 353
+# Description: Processes the input you would get in IRC command: /names
+
+chan=$(echo $line | cut -d: -f2 | cut -d' ' -f5)
+nicklist=$(echo $line | cut -d: -f3-)
+mkdir -p log/$server/ &> /dev/null
+mkdir -p var/run/$server/
+rm -rf var/run/$server/$chan &> /dev/null
+
+for newnick in $nicklist
+do echo $newnick >> var/run/$server/$chan; done
+return

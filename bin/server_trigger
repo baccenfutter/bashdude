@@ -1,0 +1,14 @@
+#!/bin/bash
+# Script: server_trigger
+# Description: Script for handling all server events
+
+flag=$(echo $line | cut -d' ' -f2)
+
+case $flag in
+	353)
+		. bin/server_triggers/353
+		continue
+		;;
+	366)exit;;
+esac
+
