@@ -9,7 +9,7 @@ searchterm=$@
 
 [[ -z $searchterm ]] && answer "Specify a search term, dude!" && return
 
-grep -r "$searchterm" log/ | tac | head |  while true
+grep -r "$searchterm" log/$server/ | tac | head |  while true
 do read line || break
 	answer $(echo $line | cut -d' ' -f3-)
 done
