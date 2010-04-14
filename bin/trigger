@@ -9,7 +9,7 @@
 
 # create channel and message segments
 chan=$(echo $header | cut -d " " -f 3)
-msg=${body:1}
+msg=${body}
 
 case $flag in
 	JOIN)
