@@ -14,14 +14,12 @@ case $subcmd in
 	list)
 		if [[ -z $arg ]]; then
 			answer "Here comes my channel list, dude:"
-			while read chan_line
-			do
-				[[ -n $chan_line ]] && answer $chan_line
-			done < var/channels
+			for channel in $(ls var/run/$server/)
+			do answer $channel; done
 		elif [[ $arg == 'voice' ]]; then
-			answer "Channels that listen to me:" $my_voice_chans
+			answer "Channels that listen to me:" $(basename $(grep -rl "^+$nick$" var/run/$server))
 		elif [[ $arg == 'op' ]]; then
-			answer "Channels I own:" $my_op_chans
+			answer "Channels I own:" $(basename $(grep -rl "^@$nick$" var/run/$server))
 		else
 			echo 
 		fi

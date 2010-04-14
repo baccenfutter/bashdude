@@ -9,5 +9,11 @@ mkdir -p var/run/$server/
 rm -rf var/run/$server/$chan &> /dev/null
 
 for newnick in $nicklist
-do echo $newnick >> var/run/$server/$chan; done
+do 
+	if [[ ${newnick:0:1} == "@" ]] || [[ ${newnick:0:1} == "+" ]]; then
+		echo "$newnick" >> var/run/$server/$chan
+	else
+		echo " $newnick" >> var/run/$server/$chan
+	fi
+done
 return

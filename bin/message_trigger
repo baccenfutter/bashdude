@@ -29,6 +29,7 @@ case $flag in
 		continue
 		;;
 	MODE)
+		# split into segments $mode and $mode_nick and process
 		mode=$(echo $line | cut -d ' ' -f 4)
 		mode_nick=$(echo $line | cut -d ' ' -f 5)
 		. bin/message_triggers/mode

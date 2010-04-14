@@ -9,6 +9,6 @@ case $flag in
 		. bin/server_triggers/353
 		continue
 		;;
-	366)exit;;
+	366)continue;;
 esac
 

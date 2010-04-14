@@ -92,17 +92,11 @@ mode_check()
 	required_mode=$1
 	chan=$2
 	case $required_mode in
-		voice)
-			for my_voice_chan in $(echo $my_voice_chans)
-			do
-				[[ $my_voice_chan == $chan ]] && return 0
-			done
+		'+')
+			egrep "^+$nick$" &> /dev/null && return 0
 			;;
-		op)
-			for my_op_chan in $(echo $my_op_chans)
-			do
-				[[ $my_op_chan == $chan ]] && return 0
-			done
+		'@')
+			egrep "^@$nick$" &> /dev/null && return 0
 			;;
 	esac
 	return 1

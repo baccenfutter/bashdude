@@ -11,11 +11,7 @@
 channel=${1:-$chan}
 if [[ ! ${channel:0:1} == "#" ]]; then channel=\#$channel; fi
 if acl_check admin; then
-	if egrep "^($channel$|$channel *$)" < var/channels; then
-		echo "PART :$channel" >> $inputfile
-	else
-		answer "That's the first thing I'll do, as soon as I've joined $channel"
-	fi
+	[[ -f var/run/$server/$chan ]] && echo "PART :$channel" >> $inputfile || answer "That's the first thing I'll do, as soon as I've joined $channel"
 else
 	answer '$part my ass!'
 fi

@@ -8,4 +8,4 @@
 
 nick_to_deop=${1:-$source_nick}
 
-acl_check admin && mode_check "op" $chan && echo MODE $chan -o $nick_to_deop >> $inputfile || answer "Check permissions, dude!"
+acl_check admin && mode_check "@" $chan && echo MODE $chan -o $nick_to_deop >> $inputfile || answer "Check permissions, dude!"
