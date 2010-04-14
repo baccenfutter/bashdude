@@ -15,17 +15,23 @@ msg=${body}
 
 case $flag in
 	JOIN)
-		#egrep "^($msg$|$msg $)" < var/channels &> /dev/null || echo $msg >> var/channels
-		continue
+		chan=$msg
+		mkdir -p log/$server/ &> /dev/null
+		mkdir -p var/run/$server/ &> /dev/null
+		rm -rf var/run/$server/$chan &> /dev/null
+		return
 		;;
 	PART)
 		# since part messages don't come with the colon, we have to trick around a bit
 		rm -f var/run/$server/$chan
-		continue
+		return
+		;;
+	QUIT)
+		return
 		;;
 	INVITE)
 		. mods/join $msg
-		continue
+		return
 		;;
 	MODE)
 		# split into segments $mode and $mode_nick and process

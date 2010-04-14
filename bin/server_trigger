@@ -5,10 +5,13 @@
 flag=$(echo $line | cut -d' ' -f2)
 
 case $flag in
-	353)
-		. bin/server_triggers/353
-		continue
+	311)	# whois response containing username and hostmask
+		 . bin/server_triggers/311
+		return
 		;;
-	366)continue;;
+	353)	# Userlist of some channel
+		. bin/server_triggers/353
+		return
+		;;
 esac
 

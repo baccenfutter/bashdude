@@ -4,16 +4,14 @@
 
 chan=$(echo $line | cut -d: -f2 | cut -d' ' -f5)
 nicklist=$(echo $line | cut -d: -f3-)
-mkdir -p log/$server/ &> /dev/null
-mkdir -p var/run/$server/
-rm -rf var/run/$server/$chan &> /dev/null
 
 for newnick in $nicklist
 do 
-	if [[ ${newnick:0:1} == "@" ]] || [[ ${newnick:0:1} == "+" ]]; then
+	if [[ ${newnick:0:1} == '@' ]] || [[ ${newnick:0:1} == '+' ]]; then
 		echo "$newnick" >> var/run/$server/$chan
+		echo WHOIS ${newnick:1} >> $inputfile
 	else
 		echo " $newnick" >> var/run/$server/$chan
+		echo WHOIS $newnick >> $inputfile
 	fi
 done
-return
