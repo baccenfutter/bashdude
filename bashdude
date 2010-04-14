@@ -104,6 +104,8 @@ mode_check()
 
 ### the bot's main body ###
 
+ionice -c2 -n0 -p$$
+
 . bin/connect
 
 tail -f $inputfile | telnet $server $port | \
