@@ -5,6 +5,6 @@
 # - Sends PONG to irc server
 # - Outputs the PONG to stdout
 
-echo "PONG ${line:5}" >> $nick.input
+echo "PONG ${line:5}" >> $inputfile
 echo "PONG ${line:5}"
 

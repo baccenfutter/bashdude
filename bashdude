@@ -54,13 +54,13 @@ answer()
 
 	# finally, add $msg and burst it out
 	line="$(echo $line$msg)"
-	echo "$line" >> $nick.input
+	echo "$line" >> $inputfile
 }
 
 acl_auth()
 {
 	acl=$(egrep "^$username:$password" < var/users | cut -d: -f3)
-	[[ -n $acl ]] && echo "$hostmask:$username:$acl" >> $nick.acl && return 0
+	[[ -n $acl ]] && echo "$hostmask:$username:$acl" >> $aclfile && return 0
 	return 1
 }
 
@@ -72,7 +72,7 @@ acl_check()
 		user)required_acl=3;;
 	esac
 
-	acl="$(cat $nick.acl | grep $hostmask | cut -d: -f3)"
+	acl="$(cat $aclfile | grep $hostmask | cut -d: -f3)"
 	case $acl in
 		owner)acl=1;;
 		admin)acl=2;;
@@ -112,7 +112,7 @@ mode_check()
 
 . bin/connect
 
-tail -f $nick.input | telnet $server $port | \
+tail -f $inputfile | telnet $server $port | \
 while true
 	do read line || break
 

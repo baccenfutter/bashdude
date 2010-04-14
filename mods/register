@@ -16,7 +16,7 @@ if [[ ${config_allow_user_reg} ]] || acl_check admin; then
 		return
 	else
 		echo "$username:$password:user" >> var/users
-		grep $hostmask < $nick.acl &> /dev/null || acl_auth $username $password
+		grep $hostmask < $aclfile &> /dev/null || acl_auth $username $password
 		answer "Account $username created!"
 	fi
 else

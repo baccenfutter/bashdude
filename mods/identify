@@ -22,7 +22,7 @@ case $chan in
 	
 	# authenticate
 	*)
-	if egrep ^$hostmask < $nick.acl &> /dev/null; then
+	if egrep ^$hostmask < $aclfile &> /dev/null; then
 		answer "Authentication failed! You are allready logged in."
 	else
 		if acl_auth $username $password; then

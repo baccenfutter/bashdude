@@ -4,8 +4,8 @@
 #
 # - Unassociates $hostmask with $user and $acl and thus logs the user out
 
-if egrep ^$hostmask < $nick.acl > $nick.acl.tmp; then
-	if [[ $(cat $nick.acl | wc -l) == 1 ]]; then echo > $nick.acl && rm $nick.acl.tmp; else mv $nick.acl.tmp $nick.acl; fi
+if egrep ^$hostmask < $aclfile > $aclfile.tmp; then
+	if [[ $(cat $aclfile | wc -l) == 1 ]]; then echo > $aclfile && rm $aclfile.tmp; else mv $aclfile.tmp $aclfile; fi
 	answer "Your are no longer logged in, dude."
 else
 	answer "I don't know you, dude"

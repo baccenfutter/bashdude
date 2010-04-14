@@ -17,7 +17,7 @@ if acl_check admin; then
 	if egrep "^($channel$|$channel $)" < var/channels ; then
 		answer "How many times do you want me to join that channel, dude?"
 	else
-		echo JOIN $channel $key >> $nick.input
+		echo JOIN $channel $key >> $inputfile
 	fi
 else
 	answer 'join my ass!'
