@@ -17,11 +17,9 @@ owner=$(egrep :owner < user_file | cut -d: -f1)
 echo "nick $nick" > $input_file
 echo "user $nick +iw $nick :$owner" >> $input_file
 
-(
-sleep 3
+(sleep 3
 
-for channel in $(cat channel_file)
+for channel in $(cat $channel_file)
 do
 [[ -n $channel ]] && echo "join " $channel >> $input_file
-done
-) &
+done) &

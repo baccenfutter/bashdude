@@ -68,7 +68,7 @@ while true
 	echo $(date +%H:%M:%S) $incoming
 	
 	if [[ "${incoming:0:1}" == ":" ]]; then
-		. bin/main
+		. $core_dir/incoming
 	else
 		if [[ "${incoming:0:4}" == "PING" ]]; then
 			. $core_dir/keepalive

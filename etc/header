@@ -24,6 +24,7 @@ var_dir=$root_dir/var
 input_file=$run_dir/$nick.input
 user_file=$etc_dir/users
 acl_file=$run_dir/$nick.acl
+channel_file=$etc_dir/channels
 
 # finally, source the main configuration file
-. $etc/config
+. $etc_dir/config
