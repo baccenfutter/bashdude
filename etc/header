@@ -6,18 +6,18 @@
 #              vars.
 
 # directories
-root_dir=/root/bashdude/
-bin_dir=$root_dir/bin/
-etc_dir=$root_dir/etc/
-usr_dir=$root_dir/usr/
+root_dir=/root/bashdude
+bin_dir=$root_dir/bin
+etc_dir=$root_dir/etc
+usr_dir=$root_dir/usr
 	share_dir=$usr_dir/share
-		core_dir=$share_dir/core/
-			mod_dir=$core_dir/modules/
-			trigger_dir=$core_dore/triggers/
-var_dir=$root_dir/var/
-	log_dir=$var_dir/log/
-	run_dir=$var_dir/run/
-		channel_dir=$run_dir/channels/
+		core_dir=$share_dir/core
+			mod_dir=$core_dir/modules
+			trigger_dir=$core_dore/triggers
+var_dir=$root_dir/var
+	log_dir=$var_dir/log
+	run_dir=$var_dir/run
+		channel_dir=$run_dir/channels
 
 
 # files
