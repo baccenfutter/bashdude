@@ -1,8 +1,0 @@
-#!/bin/bash
-# Script: cycle
-# Description: Script for cycling an IRC channel
-
-if [[ ${chan:0:1} == "#" ]]; then
-	. mods/part $chan
-	. mods/join $chan
-fi

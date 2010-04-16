@@ -1,0 +1,6 @@
+#!/bin/bash
+# Script: keepalive
+# Description: This script answers to keep-a-live PINGs from the IRC server.
+
+echo PONG :${incoming:6} >> input_file
+

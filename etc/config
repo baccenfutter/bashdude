@@ -1,0 +1,19 @@
+#!/bin/bash
+# Main configuration file
+
+nick='bashdude'
+server='localhost'
+port='6667'
+prefixchar='·'
+controlchannel='#bashdude'
+part_message='So long and thanks for all the fish!'
+quit_message='Silence! I kill you!'
+
+
+
+# Configuration variables go here:
+
+config_reply_nick=false
+config_allow_user_reg=false
+
+

@@ -1,7 +1,0 @@
-#!/bin/bash
-# Script: owner
-# Description: Informs about ownership of this bot
-#
-# - Replies $owner
-
-answer "my owner is [ $owner ]"

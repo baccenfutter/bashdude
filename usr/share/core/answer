@@ -1,0 +1,31 @@
+#!/bin/bash
+# Script: answer
+# Description: This script formulates an IRC PRIVMS with all received
+#              arguments as the message body and >>'s it into the $input_file.
+
+msg=$@
+answer=''
+
+# first, fetch errors
+if [[ "$msg" == "" ]]; then
+	echo "error: can't send privmsg - missing parameter!"
+	return 0
+fi
+# start assembling the response answer
+answer="PRIVMSG"
+
+# check for query or channel
+if [[ "${chan:0:1}" == "#" ]]; then
+	answer="$(echo $answer $chan)"
+	# check for $config_reply_nick
+	if [[ $config_reply_nick == true ]]; then
+		answer="$(echo $answer $source_nick)"
+	fi
+else
+	answer=$(echo $answer $source_nick)
+fi
+
+# finally, add $msg and burst it out
+answer="$(echo $answer :$msg)"
+echo "$answer" >> $input_file
+

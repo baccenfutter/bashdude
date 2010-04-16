@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# Script: bashbot
+# Description: A simple modular IRC bot written in Bash
+# Author: baccenfutter, c-base.org
+# Inspired by: Sean B. Palmer, inamidst.com
+#
+# - The basic idea is a while loop that uses telnet as communication interface
+#   with the IRC network. Communication input is piped into telnet using an
+#   input file. Output is piped into the while loop and parsed by a read
+#   command.
+#   The allmighty super-cow powers of the source command allow a clean
+#   file and directory structure, which allows modular programming, keeping the
+#   performance requirements as low as possible for every incoming line.
+#   Additionally, using the source command to run sub-scripts within the parent
+#   script allows use of one big namespace for all variables.
+#
+# - Initiates main loop
+
+# source config
+. etc/header
+
+acl_check()
+{
+	case $1 in
+		owner)required_acl=1;;
+		admin)required_acl=2;;
+		user)required_acl=3;;
+	esac
+
+	acl="$(cat $aclfile | grep $hostmask | cut -d: -f3)"
+	case $acl in
+		owner)acl=1;;
+		admin)acl=2;;
+		user)acl=3;;
+		*)acl=9999;;
+	esac
+
+	if [[ $acl -le $required_acl ]] ; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+mode_check()
+{
+	required_mode=$1
+	chan=$2
+	case $required_mode in
+		'+')
+			egrep "^+$nick$" &> /dev/null && return 0
+			;;
+		'@')
+			egrep "^@$nick$" &> /dev/null && return 0
+			;;
+	esac
+	return 1
+}
+
+### the bot's main body ###
+
+. $core_dir/connect
+
+tail -f $input_file | telnet $server $port | \
+while true
+	do read incoming || break
+
+	echo $(date +%H:%M:%S) $incoming
+	
+	if [[ "${incoming:0:1}" == ":" ]]; then
+		. bin/main
+	else
+		if [[ "${incoming:0:4}" == "PING" ]]; then
+			. $core_dir/keepalive
+		fi
+	fi
+done
+

@@ -1,0 +1,7 @@
+#!/bin/bash
+# Script: authorize
+# Description: fake-function for validating authorization
+
+acl=$(egrep "^$username:$password" < $user_file | cut -d: -f3)
+[[ -n $acl ]] && echo "$hostmask:$username:$acl" >> $acl_file && return 0
+return 1

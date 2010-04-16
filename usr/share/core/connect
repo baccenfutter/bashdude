@@ -1,0 +1,27 @@
+#!/bin/bash
+# Script: connect
+# Description: Script for hand-shaking with the IRC server
+#
+# - Creates/Resets ACL management file -> $aclfile
+# - Creates/Resets input file -> $inputfile
+# - Sets $owner variable
+# - Sets IRC username, realname and nickname
+# - Initiates sub-script to join all configured channels
+
+rm $run_dir/* 2&>1 /dev/null
+rm $acl_file 2&>1 /dev/null
+touch $acl_file
+
+owner=$(egrep :owner < user_file | cut -d: -f1)
+
+echo "nick $nick" > $input_file
+echo "user $nick +iw $nick :$owner" >> $input_file
+
+(
+sleep 3
+
+for channel in $(cat channel_file)
+do
+[[ -n $channel ]] && echo "join " $channel >> $input_file
+done
+) &

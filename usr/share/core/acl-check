@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Script: bashbot
+# Description: A simple modular IRC bot written in Bash
+# Author: baccenfutter, c-base.org
+# Inspired by: Sean B. Palmer, inamidst.com
+#
+
+required_acl=$1
+
+# add as you please, max is 9999
+case $required_acl in
+	owner)required_acl=0;;
+	admin)required_acl=1;;
+	user)required_acl=2;;
+esac
+
+# grep $acl_file for ACL and translate to integer. if unknown map to 9999
+acl="$(grep $hostmask < acl_file | cut -d: -f3)"
+case $acl in
+	owner)acl=0;;
+	admin)acl=1;;
+	user)acl=2;;
+	*)acl=9999;;
+esac
+
+# compare and return
+if [[ $acl -le $required_acl ]] ; then
+	return 0
+else
+	return 1
+fi
+
