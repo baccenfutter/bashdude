@@ -8,18 +8,20 @@
 # - Sets IRC username, realname and nickname
 # - Initiates sub-script to join all configured channels
 
-rm $run_dir/* 2&>1 /dev/null
-rm $acl_file 2&>1 /dev/null
+rm $run_dir/* &> /dev/null
+rm $acl_file &> /dev/null
 touch $acl_file
 
-owner=$(egrep :owner < user_file | cut -d: -f1)
+owner=$(egrep " owner$" < $user_file | cut -d: -f1)
+echo Owner: $owner
 
+echo Connecting...
 echo "nick $nick" > $input_file
 echo "user $nick +iw $nick :$owner" >> $input_file
 
 (sleep 3
-
+echo Auto-joining channels:
 for channel in $(cat $channel_file)
 do
-[[ -n $channel ]] && echo "join " $channel >> $input_file
+[[ -n $channel ]] && echo "join " $channel >> $input_file && echo $channel
 done) &

@@ -65,7 +65,7 @@ tail -f $input_file | telnet $server $port | \
 while true
 	do read incoming || break
 
-	echo $(date +%H:%M:%S) $incoming
+	echo $(date +%H:%M:%S) $incoming >> $log_dir/$nick.output
 	
 	if [[ "${incoming:0:1}" == ":" ]]; then
 		. $core_dir/incoming
