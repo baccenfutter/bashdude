@@ -1,0 +1,11 @@
+#!/bin/bash
+# Script: 353
+# Description: parses all nicknames when joining a channel
+
+channel=$(echo $incoming | cut -d' ' -f2)
+incoming=$(echo $incoming | cut -d: -f2-)
+
+for nickname in $(echo $incoming)
+do
+	echo $nickname >> $channel_dir/$channel
+done

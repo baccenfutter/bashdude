@@ -1,0 +1,24 @@
+#!/bin/bash
+# Script: incoming
+# Description: this script parses the incoming IRC stream
+
+# remove prepending colon
+incoming=${incoming:1}
+
+# cut out the three first fields
+hostmask=$(echo $incoming | cut -d' ' -f1)
+msgtype=$(echo $incoming | cut -d' ' -f2)
+channel=$(echo $incoming | cut -d' ' -f3)
+nickname=$(echo $hostmask | cut -d'!' -f1)
+hostname=$(echo $hostmask | cut -d'!' -f2)
+
+# tail $incoing
+incoming=${incoming:$(expr ${#hostmask} + ${#msgtype} + ${#channel} + 3 )}
+
+# for design reasons, server messages and chat events have seperate directories
+if [[ $hostname == $hostmask ]]; then
+	[[ -f $trigger_dir/server/$msgtype ]] && . $trigger_dir/server/$msgtype
+else
+	[[ -f $trigger_dir/message/$msgtype ]] && . $trigger_dir/message/$msgtype
+fi
+

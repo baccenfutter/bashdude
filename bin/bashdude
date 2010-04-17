@@ -67,10 +67,10 @@ while true
 
 	echo $(date +%H:%M:%S) $incoming >> $log_dir/$nick.output
 	
-	if [[ "${incoming:0:1}" == ":" ]]; then
+	if [ "${incoming:0:1}" == ":" ]; then
 		. $core_dir/incoming
 	else
-		if [[ "${incoming:0:4}" == "PING" ]]; then
+		if [ "${incoming:0:4}" == "PING" ]; then
 			. $core_dir/keepalive
 		fi
 	fi

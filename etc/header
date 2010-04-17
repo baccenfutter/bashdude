@@ -10,20 +10,19 @@ root_dir=/root/bashdude
 bin_dir=$root_dir/bin
 etc_dir=$root_dir/etc
 usr_dir=$root_dir/usr
-	share_dir=$usr_dir/share
-		core_dir=$share_dir/core
-			mod_dir=$core_dir/modules
-			trigger_dir=$core_dore/triggers
+share_dir=$usr_dir/share
+core_dir=$share_dir/core
+mod_dir=$core_dir/modules
+trigger_dir=$core_dir/triggers
 var_dir=$root_dir/var
-	log_dir=$var_dir/log
-	run_dir=$var_dir/run
-		channel_dir=$run_dir/channels
-
+log_dir=$var_dir/log
+run_dir=$var_dir/run
+channel_dir=$run_dir/channels
 
 # files
-input_file=$run_dir/$nick.input
+input_file=$run_dir/irc.input
 user_file=$etc_dir/users
-acl_file=$run_dir/$nick.acl
+acl_file=$run_dir/auth.acl
 channel_file=$etc_dir/channels
 
 # finally, source the main configuration file
