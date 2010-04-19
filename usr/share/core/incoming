@@ -15,6 +15,9 @@ hostname=$(echo $hostmask | cut -d'!' -f2)
 # tail $incoing
 incoming=${incoming:$(expr ${#hostmask} + ${#msgtype} + ${#channel} + 3 )}
 
+# check if we have a query or a channel message
+[[ $channel == $nick ]] && query=true || query=false
+
 # for design reasons, server messages and chat events have seperate directories
 if [[ $hostname == $hostmask ]]; then
 	[[ -f $trigger_dir/server/$msgtype ]] && . $trigger_dir/server/$msgtype
