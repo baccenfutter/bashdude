@@ -1,0 +1,9 @@
+#!/bin/bash
+# Script: invite
+# Description: script for handling channel invitations
+
+# assign $new_channel
+new_channel=${incoming:1}
+
+. $mod_dir/join $new_channel
+
