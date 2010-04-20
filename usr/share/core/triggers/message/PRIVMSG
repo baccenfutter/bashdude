@@ -1,0 +1,19 @@
+#!/bin/bash
+# Script: PRIVMS
+# Description: script for handling PRIVMSGs
+
+# cut the preceding colon from $incoming
+incoming="${incoming:1}"
+
+if [[ ${incoming:0:1} == $prefixchar ]]; then
+	# command incoming
+	# first assign $command
+	command="$(echo $incoming | cut -d' ' -f1)" && command=${command:1}
+	# then, tail incoming
+	incoming="${incoming:$(expr ${#command} + 1)}"
+	# finally, assign $args
+	args="$(echo $incoming | cut -d' ' -f2-)"
+	
+	# now we source the corresponding core module
+	[[ -f $module_dir/$command ]] && . $module_dir/$command || echo $command_not_found
+fi
