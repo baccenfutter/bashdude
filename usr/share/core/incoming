@@ -19,7 +19,7 @@ incoming=${incoming:$(expr ${#hostmask} + ${#msgtype} + ${#channel} + 3 )}
 [[ $channel == $nick ]] && query=true || query=false
 
 # for design reasons, server messages and chat events have seperate directories
-if [[ $hostname == $hostmastk ]]; then
+if [[ $hostname == $hostmask ]]; then
 	[[ -f $trigger_dir/server/$msgtype ]] && . $trigger_dir/server/$msgtype
 else
 	[[ -f $trigger_dir/message/$msgtype ]] && . $trigger_dir/message/$msgtype
