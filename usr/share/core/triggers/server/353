@@ -5,7 +5,7 @@
 channel=$(echo $incoming | cut -d' ' -f2)
 incoming=$(echo $incoming | cut -d: -f2-)
 
-echo Received the following nicklist: $incoming
+echo Received the following nicklist for $channel: $incoming
 
 for nickname in $(echo $incoming)
 do
