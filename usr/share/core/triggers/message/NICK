@@ -1,0 +1,7 @@
+#!/bin/bash
+# Script: NICK
+# Description: message trigger handler for JOINS
+
+newnick="${channel}"
+
+sed -i "s/\([@+]*\)$nickname/\1$newnick/" $channel_dir/*
