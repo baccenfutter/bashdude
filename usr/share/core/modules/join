@@ -1,0 +1,9 @@
+#!/bin/bash
+# Script: join
+# Description: script for joining a channel
+
+# we need to know the channel we're joining
+[[ -z $1 ]] && $answer $missing_arguments && return
+
+echo JOIN $@ >> $input_file
+
