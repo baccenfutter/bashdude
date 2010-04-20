@@ -12,7 +12,5 @@ incoming_username="$(echo $incoming | cut -d' ' -f2)"
 incoming_hostmask="$(echo $incoming | cut -d' ' -f3)"
 
 echo Incoming: server trigger 311 "[WHOIS RESPONSE]" for $incoming_nickname
-
-echo "Found $incoming_nickname in $(grep "" $channel_dir/* | grep $incoming_nickname)"
 sed -i "s/$incoming_nickname/$incoming_nickname $incoming_username $incoming_hostmask/g" $channel_dir/*
 
