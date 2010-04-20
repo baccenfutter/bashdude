@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# remove the chatter from all channel files
+sed -i "/[@+]*$nickname / d" $channel_dir/*
