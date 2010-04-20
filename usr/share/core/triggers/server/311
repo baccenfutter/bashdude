@@ -11,6 +11,14 @@ incoming_nickname="$(echo $incoming | cut -d' ' -f1)"
 incoming_username="$(echo $incoming | cut -d' ' -f2)"
 incoming_hostmask="$(echo $incoming | cut -d' ' -f3)"
 
+incoming_nickname="$(echo $incoming_nickname | sed 's/\\/\\\\/g')"
+incoming_username="$(echo $incoming_username | sed 's/\\/\\\\/g')"
+incoming_hostname="$(echo $incoming_hostname | sed 's/\\/\\\\/g')"
+
+incoming_nickname="$(echo $incoming_nickname | sed 's/\//\\\//g')"
+incoming_username="$(echo $incoming_username | sed 's/\//\\\//g')"
+incoming_hostmask="$(echo $incoming_hostmask | sed 's/\//\\\//g')"
+
 echo Incoming: server trigger 311 "[WHOIS RESPONSE]" for $incoming_nickname
 sed -i "s/\([@+]*\)$incoming_nickname$/\1$incoming_nickname $incoming_username $incoming_hostmask/g" $channel_dir/*
 
