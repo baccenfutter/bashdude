@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# cut the colon of the channel name
+channel=${channel:1}
+
+# debug output
+echo Caught JOIN
+echo "$nickname!$username@$hostname $channel $msgtype $incoming"
+
+# we ignore our own JOIN, cause it is handled via server trigger 353
+[[ $nickname == $nick ]] && return
+
+# add the new chatter to the channel file
+echo $nickname $username $hostname >> $channel_dir/$channel
