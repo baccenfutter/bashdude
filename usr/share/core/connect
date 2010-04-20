@@ -20,8 +20,9 @@ echo "nick $nick" > $input_file
 echo "user $nick +iw $nick :$owner" >> $input_file
 
 { sleep 3
-echo Auto-joining channels:
+echo -n "Auto-joining channels: "
 for channel in $(cat $channel_file)
 do
-[[ -n $channel ]] && echo "join " $channel >> $input_file && echo $channel
-done } &
+	[[ -n $channel ]] && echo "join " $channel >> $input_file && echo -n $channel
+done
+echo; } &
