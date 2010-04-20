@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# debug output
+echo "PART: $channel -> $nickname"
+
+# if we are parting ourselves, just delete the channel file
+[[ $nickname == $nick ]] && rm -f $channel_dir/$channel && return
+
+# remove the chatter from the channel file
+sed -i "/^[@+]*$nickname / d" "$channel_dir/$channel"
+
