@@ -1,0 +1,5 @@
+#!/bin/bash
+# Script: NOTICE
+# Description: script for handling incoming notices
+
+echo "NOTICE from $nickname: $incoming
