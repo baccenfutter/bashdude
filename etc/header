@@ -25,5 +25,10 @@ user_file=$etc_dir/users
 acl_file=$run_dir/auth.acl
 channel_file=$etc_dir/channels
 
+# command substitutions vars
+answer=$core_dir/answer
+authorize=$core_dir/authorize
+acl_check=$core_dir/acl_check
+
 # finally, source the main configuration file
 . $etc_dir/config
