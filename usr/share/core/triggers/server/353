@@ -10,5 +10,6 @@ echo $channel: $incoming
 for nickname in $(echo $incoming)
 do
 	echo $nickname >> $channel_dir/$channel
-	[[ $(echo $nickname | egrep "^(\@|\+)") ]] && nickname=${nickname:1}
+	# [[ $(echo $nickname | egrep "^(\@|\+)") ]] && nickname=${nickname:1}
 done
+
