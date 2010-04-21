@@ -3,29 +3,29 @@
 # Description: This script formulates an IRC PRIVMS with all received
 #              arguments as the message body and >>'s it into the $input_file.
 
-msg=$@
-answer=''
+msg="$@"
+output=''
 
 # first, fetch errors
 if [[ "$msg" == "" ]]; then
 	echo "error: can't send privmsg - missing parameter!"
 	return 0
 fi
-# start assembling the response answer
-answer="PRIVMSG"
+# start assembling the response output
+output="PRIVMSG"
 
 # check for query or channelnel
-if [[ $query ]]; then
-	answer="$(echo $answer $channel)"
+if $query; then
+	output=$(echo $output $nickname)
+else
+	output="$(echo $output $channel)"
 	# check for $config_reply_nick
 	if [[ $config_reply_nick == true ]]; then
-		answer="$(echo $answer $nickname)"
+		output="$(echo $output $nickname)"
 	fi
-else
-	answer=$(echo $answer $nickname)
 fi
 
 # finally, add $msg and burst it out
-answer="$(echo $answer :$msg)"
-echo "$answer" >> $input_file
+output="$(echo $output :$msg)"
+echo "$output" >> $input_file
 
