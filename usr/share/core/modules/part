@@ -1,0 +1,8 @@
+#!/bin/bash
+
+[[ $query_mode ]] && $answer $not_in_query $$ return
+
+off_channel=${1:-$channel}
+
+echo PART $off_channel >> $input_file
+
