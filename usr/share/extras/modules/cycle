@@ -1,0 +1,11 @@
+#!/bin/bash
+# Script: cycle
+# Description: script for cycling a channel
+
+cycle_chan=${1:-$channel}
+
+[[ -z $cycle_chan ]] && return
+
+. $mod_dir/part $cycle_chan
+. $mod_dir/join $cycle_chan
+
