@@ -23,9 +23,9 @@ incoming=${incoming:$(expr ${#hostmask} + ${#msgtype} + ${#channel} + 3 )}
 # for design reasons, server messages and chat events have seperate directories
 if [[ $hostmask == $origin ]]; then
 	[[ -f $trigger_dir/server/$msgtype ]] && echo $incoming >> $log_dir/$server && . $trigger_dir/server/$msgtype
-	[[ ! -f $trigger_dir/server/$msgtype ]] && echo Unhandled server message! Type: $msgtype
+	[[ ! -f $trigger_dir/server/$msgtype ]] && echo Unhandled server message! Type: $msgtype "->" $incoming
 else
 	[[ -f $trigger_dir/message/$msgtype ]] && . $trigger_dir/message/$msgtype
-	[[ ! -f $trigger_dir/message/$msgtype ]] && echo Unhandled message! Type: $msgtype
+	[[ ! -f $trigger_dir/message/$msgtype ]] && echo Unhandled message! Type: $msgtype "->" $incoming
 fi
 
