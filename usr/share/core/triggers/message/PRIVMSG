@@ -10,9 +10,9 @@ if [[ ${incoming:0:1} == $prefixchar ]]; then
 	# first assign $command
 	command="$(echo $incoming | cut -d' ' -f1)" && command=${command:1}
 	# then, tail incoming
-	incoming="${incoming:$(expr ${#command} + 1)}"
+	incoming="${incoming:$(expr ${#command} + 2)}"
 	# finally, assign $args
-	args="$(echo $incoming | cut -d' ' -f2-)"
+	args="$incoming"
 	
 	# now we source the corresponding core module
 	[[ -f $mod_dir/$command ]] && . $mod_dir/$command $args
