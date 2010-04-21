@@ -2,3 +2,4 @@
 
 # remove the chatter from all channel files
 sed -i "/[@+]*$nickname / d" $channel_dir/*
+sed -i "/^$nickname / d" $acl_file
