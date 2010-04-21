@@ -14,15 +14,15 @@ fi
 # start assembling the response answer
 answer="PRIVMSG"
 
-# check for query or channel
-if [[ "${chan:0:1}" == "#" ]]; then
-	answer="$(echo $answer $chan)"
+# check for query or channelnel
+if [[ $query ]]; then
+	answer="$(echo $answer $channel)"
 	# check for $config_reply_nick
 	if [[ $config_reply_nick == true ]]; then
-		answer="$(echo $answer $source_nick)"
+		answer="$(echo $answer $nickname)"
 	fi
 else
-	answer=$(echo $answer $source_nick)
+	answer=$(echo $answer $nickname)
 fi
 
 # finally, add $msg and burst it out
