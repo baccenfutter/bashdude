@@ -12,7 +12,7 @@ rm $run_dir/**/* &> /dev/null
 mkdir -p $channel_dir
 touch $acl_file
 
-owner=$(egrep " owner$" < $user_file | cut -d: -f1)
+owner=$(egrep " owner$" < $user_file | cut -d' ' -f1)
 echo Setting owner to: $owner
 
 echo Connecting...
