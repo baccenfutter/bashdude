@@ -3,8 +3,8 @@
 # Description: Script for parsing the whois response line containing the
 #              hostmask data.
 
-# this script is temporarily disabled
-#return 0
+# this script is temporarily disabled due to ACCESS FLOOD
+return 0
 
 # cut the incoming nickname, username and hostmask
 incoming_nickname="$(echo $incoming | cut -d' ' -f1)"

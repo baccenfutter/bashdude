@@ -5,12 +5,10 @@
 channel=$(echo $incoming | cut -d' ' -f2)
 incoming=$(echo $incoming | cut -d: -f2-)
 
-echo Received the following nicklist for $channel: $incoming
+echo $channel: $incoming
 
 for nickname in $(echo $incoming)
 do
 	echo $nickname >> $channel_dir/$channel
 	[[ $(echo $nickname | egrep "^(\@|\+)") ]] && nickname=${nickname:1}
-	echo WHOIS $nickname >> $input_file
-	echo Outgoing: WHOIS $nickname
 done
