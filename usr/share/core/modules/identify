@@ -1,0 +1,20 @@
+#!/bin/bash
+# Script: identify
+# Description: script for authenticating a known user and assigning ACLs
+
+username="$1"
+password="$2"
+
+if $query; then
+	acl=$(egrep "^$username $password " < $user_file | cut -d' ' -f3)
+	echo $nickname $acl >> $acl_file
+	. $answer I have identified you as $acl
+else
+	. $answer "Dont do this in public, dude!"
+	if [[ -n "$password" ]]; then
+		. $answer "Account [DISABLED]"
+		# yet, to come...
+	fi
+	return
+fi
+
