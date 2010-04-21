@@ -8,9 +8,8 @@
 # - Sets IRC username, realname and nickname
 # - Initiates sub-script to join all configured channels
 
-rm $run_dir/**/* &> /dev/null
+rm -rf $run_dir
 mkdir -p $channel_dir
-touch $acl_file
 
 owner=$(egrep " owner$" < $user_file | cut -d' ' -f1)
 echo Setting owner to: $owner
