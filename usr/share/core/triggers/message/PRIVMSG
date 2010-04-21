@@ -15,5 +15,6 @@ if [[ ${incoming:0:1} == $prefixchar ]]; then
 	args="$(echo $incoming | cut -d' ' -f2-)"
 	
 	# now we source the corresponding core module
-	[[ -f $mod_dir/$command ]] && . $mod_dir/$command $args || echo $command_not_found
+	[[ -f $mod_dir/$command ]] && . $mod_dir/$command $args
+	[[ -f $extra_mod_dir/$command ]] && . $extra_mod_dir/$command $args
 fi
