@@ -5,3 +5,5 @@
 newnick="${channel}"
 
 sed -i "s/\([@+]*\)$nickname/\1$newnick/" $channel_dir/*
+echo NICK: $nickname "->" $newnick
+
