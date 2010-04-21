@@ -1,0 +1,28 @@
+#!/bin/bash
+# Script: register
+# Description: user registration script
+
+username="$1"
+password="$2"
+
+# registration can be disabled in etc/config
+if ! $config_allow_user_reg; then
+	. answer "Registration disabled by configuration!" && return
+fi
+
+# registration may only take place in private
+if $query; then
+	echo "$username $password $user" >> $user_file
+	echo "$username user" >> $acl_file
+	. $answer "I have registered you as user and logged you in."
+	. $answer "Welcome!"
+else
+	. $answer "Do not do this in public, dude!"
+	if [[ -n "$password" ]]; then
+		. $answer "You should not use that password anymore after stating it in public, dude!"
+		# yet, to come...
+	fi
+	return
+fi
+
+
