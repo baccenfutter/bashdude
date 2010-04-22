@@ -1,6 +1,70 @@
 BashDude - a simple bodular IRC bot written in bash
+Version	 : 0.23
+Date	 : 2010-04-22
+Tag-name : proof-of-concept
 
-I've done a complete redesign a basically started everything from scratch. This
-is not working, as it is not done, yet.
+I've done a complete redesign and basically started everything from scratch.
+
+FEATURES:
+- connect to a single irc network
+- auto-join a list of channels
+- join on invite
+- user-registration
+- ACL management (extendable)
+- in-channel user interaction
 
 I'll keep development in progress on this, so stay sticky!
+
+
+
+DIRECTORY-TREE:
+.
+|-- README							this readme document
+|-- bin								directory for all main scripts (scripts to be executed by the user)
+|   `-- bashdude					the main loop of the bot
+|-- etc								directory for configuration files
+|   |-- channels					list of channels to auto-join | one channel per line (supports +k)
+|   |-- config						main configuration file for connection, bot and owner information
+|   |-- header						a header file for all directory and file variables - just for the better overview
+|   `-- users						the user file | format: user password acl
+|-- usr
+|   `-- share						directory for internal routines and all core sub-scripts
+|       |-- core					directory for core routines
+|       |   |-- acl_check			script for validating acl | returns 0 for ok and 1 for not ok
+|       |   |-- answer				script for assembling PRIVMSGs and sending them to the network
+|       |   |-- authorize			script for authorizing users
+|       |   |-- connect				script for authorizing users
+|       |   |-- incoming			script for parsing incoming irc messages
+|       |   |-- keepalive			script for responding to TCP keep-alive requests
+|       |   |-- modules				directory for all core modules - modules are in-channel commands
+|       |   |   |-- identify		script for identifying a user
+|       |   |   |-- join			let the bot join a channel
+|       |   |   |-- part			let the bot part a channel
+|       |   |   |-- ping			i-am-alive command
+|       |   |   |-- register		script for user registration
+|       |   |   `-- rehash			script for rehashing the configuration and header file
+|       |   |-- triggers			directory for all message type handlers
+|       |   |   |-- message			direcotry for user message handlers
+|       |   |   |   |-- INVITE		script for reacting to channel invites
+|       |   |   |   |-- JOIN		handles join messages
+|       |   |   |   |-- MODE		handles mode changes
+|       |   |   |   |-- NICK		handles nick changes
+|       |   |   |   |-- NOTICE		handles notices
+|       |   |   |   |-- PART		handles channel parts
+|       |   |   |   |-- PRIVMSG		handles privmsgs, also checks for incoming commands and initiates module
+|       |   |   |   `-- QUIT		handles quits
+|       |   |   `-- server			directory for server message hadlers
+|       |   |       |-- 311			handles 311 - a whois response line | currently disabled due to ACCESS-FLOODing
+|       |   |       `-- 353			handles 353 - incoming channel user list
+|       `-- extras					direcotry for all not core stuff
+|           `-- modules				directory for extra modules
+|               `-- cycle			let the bot cycle a channel
+`-- var								directory for all various stuff
+    |-- log							log directory
+    `-- run							directory for all dynamic runtime files
+        |-- auth.acl				holds all authenticated nicks and their ACL
+        |-- channels				directory for all channel files
+        `-- irc.input				the input file to drop messages into the telnet loop
+
+
+
