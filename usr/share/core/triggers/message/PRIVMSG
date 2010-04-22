@@ -5,15 +5,17 @@
 # cut the preceding colon from $incoming
 incoming="${incoming:1}"
 
-if [[ ${incoming:0:1} == $prefixchar ]]; then
+if [[ ${incoming:0:1} == $prefixchar ]] || $query; then
 	# command incoming
-	# first assign $command
-	command="$(echo $incoming | cut -d' ' -f1)" && command=${command:1}
-	# then, tail incoming
-	incoming="${incoming:$(expr ${#command} + 2)}"
+	# first assign $command and tail $incoming
+	command="$(echo $incoming | cut -d' ' -f1)" && incoming="${incoming:$(expr ${#command} + 1)}"
+
+	# in channels we might have to cut $prefixchar from $command and again tail $incoming
+	[[ ${command:0:1} == "$prefixchar" ]] && command=${command:1}
+
 	# finally, assign $args
 	args="$incoming"
-	
+
 	# now we source the corresponding core module
 	[[ -f $mod_dir/$command ]] && . $mod_dir/$command $args
 	[[ -f $extra_mod_dir/$command ]] && . $extra_mod_dir/$command $args
