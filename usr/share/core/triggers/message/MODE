@@ -20,3 +20,4 @@ case $mode in
 	echo NAMES $channel >> $input_file
 esac
 
+echo MODE: $channel "->" $mode_nick $mode
