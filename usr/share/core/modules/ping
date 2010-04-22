@@ -1,0 +1,6 @@
+#!/bin/bash
+# Script: ping
+# Description: proof-of-life
+
+. $answer pong
+
