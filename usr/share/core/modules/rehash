@@ -1,0 +1,4 @@
+#!/bin/bash
+
+. $acl_check owner && . $etc_dir/header && . $answer "Dood!"
+
