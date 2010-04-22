@@ -8,6 +8,9 @@ key="$2"
 # we need to know the channel we're joining
 [[ -z "$new_channel" ]] && $answer $missing_arguments && return
 
+# fix a missing preceding #
+[[ ${new_channel:0:1} == "#" ]] || new_channel="#$new_channel"
+
 # we can't join a channel more than once
 [[ -f $channel_dir/$new_channel ]] && return
 
