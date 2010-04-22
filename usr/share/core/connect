@@ -10,6 +10,7 @@
 
 rm -rf $run_dir
 mkdir -p $channel_dir
+touch $acl_file
 
 owner=$(egrep " owner$" < $user_file | cut -d' ' -f1)
 echo Setting owner to: $owner
