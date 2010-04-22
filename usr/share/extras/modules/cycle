@@ -2,10 +2,10 @@
 # Script: cycle
 # Description: script for cycling a channel
 
-cycle_chan=${1:-$channel}
+cycle_chan=${@:-$channel}
 
 [[ -z $cycle_chan ]] && return
 
 . $mod_dir/part $cycle_chan
-. $mod_dir/join $cycle_chan
+(sleep 2 && . $mod_dir/join $cycle_chan) &
 
