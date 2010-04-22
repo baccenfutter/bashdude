@@ -1,0 +1,22 @@
+#!/bin/bash
+# Script: mode
+# Description: script for handling user mode changes
+
+# assign variables
+mode="$(echo $incoming | cut -d' ' -f1)"
+mode_nick="$(echo $incoming | cut -d' ' -f2)"
+
+# positiv mode changes are quite easy to handle, we just sed s/// them
+case $mode in
+	'+o') sed -i "s/^[@%+]*$mode_nick/@$mode_nick/" $channel_dir/$channel ;;
+	'+h') sed -i "s/^[@%+]*$mode_nick/@$mode_nick/" $channel_dir/$channel ;;
+	'+v') sed -i "s/^[@%+]*$mode_nick/@$mode_nick/" $channel_dir/$channel ;;
+	'-o'|'-h'|'-v')
+	# negativ user mode changes are a little bit tougher, since we can not know
+	# what mode the user has after mode change. the only way I can think of to
+	# get by this, is to completely rehash the channel userlist. since user
+	# modes accure quite seldom, this shouldn't be that much of a problem.
+	> $channel_dir/$channel
+	echo NAMES $channel >> $input_file
+esac
+
