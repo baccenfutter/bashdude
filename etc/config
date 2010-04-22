@@ -6,6 +6,7 @@ server='localhost'
 port='6667'
 prefixchar='·'
 controlchannel='#bashdude'
+debug=false
 
 # answers
 part_message='So long and thanks for all the fish!'
