@@ -1,8 +1,16 @@
 #!/bin/bash
+# Script: part
+# Description: script for parting a channel
 
-[[ $query_mode ]] && $answer $not_in_query $$ return
-
+# assign off_channel
 off_channel=${1:-$channel}
 
-echo PART $off_channel >> $input_file
+# fix missing preceding #
+[[ ${off_channel:0:1} == "#" ]] || off_channel="#$off_channel"
+
+# we can't part a channel we are not joined to
+[[ -f $channel_dir/$off_channel ]] || return
+
+# check ACL and PART
+. $acl_check admin && echo PART $off_channel >> $input_file
 
