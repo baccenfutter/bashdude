@@ -9,8 +9,8 @@ mode_nick="$(echo $incoming | cut -d' ' -f2)"
 # positiv mode changes are quite easy to handle, we just sed s/// them
 case $mode in
 	'+o') sed -i "s/^[@%+]*$mode_nick/@$mode_nick/" $channel_dir/$channel ;;
-	'+h') sed -i "s/^[@%+]*$mode_nick/@$mode_nick/" $channel_dir/$channel ;;
-	'+v') sed -i "s/^[@%+]*$mode_nick/@$mode_nick/" $channel_dir/$channel ;;
+	'+h') sed -i "s/^[@%+]*$mode_nick/%$mode_nick/" $channel_dir/$channel ;;
+	'+v') sed -i "s/^[@%+]*$mode_nick/+$mode_nick/" $channel_dir/$channel ;;
 	'-o'|'-h'|'-v')
 	# negativ user mode changes are a little bit tougher, since we can not know
 	# what mode the user has after mode change. the only way I can think of to

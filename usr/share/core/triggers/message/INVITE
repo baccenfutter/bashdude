@@ -5,5 +5,5 @@
 # assign $new_channel
 new_channel=${incoming:1}
 
-. $mod_dir/join $new_channel
+. acl_check owner && . $mod_dir/join $new_channel
 
